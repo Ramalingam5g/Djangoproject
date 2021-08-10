@@ -4,79 +4,131 @@
     /* body{
       background-color:rgb(181, 199, 231);
     } */
-    input{
-      border: 1px solid rgb(7, 7, 7);
-      height: 20px;
-    }
-    label{
-      font-size: 30px;
-    }
-    table {
-      font-family: arial, sans-serif;
-      border-collapse: collapse;
-      width: 40%;
-    }
-    
-    td, th {
-      border: 1px solid #000000;
-      text-align: left;
-      padding: 8px;
-    }
-    
-    tr:nth-child() {
-      background-color: #dddddd;
-    }
+    .contact{
+	padding: 4%;
+	height: 400px;
+}
+
+.contact-info{
+	margin-top:10%;
+}
+.contact-info img{
+	margin-bottom: 15%;
+}
+.contact-info h2{
+	margin-bottom: 10%;
+}
+.col-md-9{
+	background: #fff;
+	padding: 3%;
+	border-top-right-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+}
+.contact-form label{
+	font-weight:600;
+}
+.contact-form button{
+	background: #25274d;
+	color: #fff;
+	font-weight: 600;
+	width: 25%;
+}
+.contact-form button:focus{
+	box-shadow:none;
+}
     
     </style>
 </head>
 <body>
-  <center>
-    <h1> Update The Record</h1>
+  
+    <h1> Material Stock  Updation</h1>
     <hr/>
-    <form method="POST" action="/update/{{ Material.receipt_no }}">
+    <form method="POST" action="">
       {% csrf_token %}
+    <!-- <div class="form-group">
+      <label class="control-label col-sm-5" for="Material_Name">Material Name:</label>
+      <div class="col-sm-10">          
+      <input type="text" class="form-control" id="Material_Name" placeholder="{{ form_material.Material_Name }}">
+    </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="Date">Date:</label>
+      <div class="col-sm-10">          
+      <input type="date" class="form-control" id="Date" placeholder="{{ form_material.Date }}" >
+    </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-5" for="Documentn_Number">Document Number:</label>
+      <div class="col-sm-10">
+      <input type="text" class="form-control" id="Documentn_Number" placeholder="{{ form_material.Documentn_Number }}" >
+    </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-5" for="Verification_Date">Verification Date:</label>
+      <div class="col-sm-10">
+      <input type="text" class="form-control" id="Verification_Date" placeholder="{{ form_material.Verification_Date }}" >
+    </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-5" for="Verified_By">Verified by:</label>
+      <div class="col-sm-10">
+      <input type="text" class="form-control" id="Verified_By" placeholder="{{ form_material.Verified_By }}" >
+    </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-5" for="Balance">Balance:</label>
+      <div class="col-sm-10">
+      <input type="text" class="form-control" id="Balance" placeholder="{{ form_material.Balance }}" >
+    </div>
+    </div>
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10"> -->
+        <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+      <!-- <input type="submit" value="Submit"> -->
+      <!-- </div> -->
+      <!-- </div> -->
+      <!-- </form> --> -->
     <table class="table table-striped table-bordered table-sm">
       <tr>
+        <td>Material Name</td>
+        <td><input type="text" name="Material Name"value="{{ form_material.Material_Name }}"/></td>
+      </tr>
+      <tr>
         <td>Date</td>
-        <td><input type="text" name="date"value="{{ Material.date }}"/></td>
+        <td><input type="date" name="Date"value="{{ form_material.Date }}"/></td>
       </tr>
       <tr>
         <td>Document Number</td>
-        <td><input type="number" name="doc_no"value="{{ Material.doc_no }}"/></td>
+        <td><input type="number" name="Document Number"value="{{ form_material.Document_Number }}"/></td>
       </tr>
       <tr>
         <td>Received From</td>
-        <td><input type="text" name="received_from" value="{{ Material.received_from }}"/></td>
-      </tr>
-      <tr>
+        <td><input type="text" name="received_from" value="{{ form_material.Received_From }}"/></td>
+      </tr> -->
+      <!-- <tr>
         <td>Receipt Number</td>
-        <td><input type="number" name="receipt_no" value="{{ Material.receipt_no }}"readonly/></td>
-      </tr>
-      <tr>
+        <td><input type="number" name="receipt_no" value="{{ form_material.receipt_no }}"readonly/></td>
+      </tr> -->
+      <!-- <tr>
         <td>Issue</td>
-        <td><input type="text" name="issue"value="{{ Material.issue }}"/></td>
-      </tr>
+        <td><input type="text" name="issue"value="{{ form_material.Issue }}"/></td>
+      </tr> -->
       <tr>
         <td>Balance</td>
-        <td><input type="number" name="balance" value="{{ Material.balance }}"/></td>
+        <td><input type="number" name="balance" value="{{ form_material.Balance }}"/></td>
       </tr>
       <tr>
         <td>Verification date</td>
-        <td><input type="text" name="verification_date"value="{{ Material.verification_date }}"/></td>
+        <td><input type="date" name="verification_date"value="{{ form_material.Verification_Date }}"/></td>
       </tr>
       <tr>
         <td>Verified by</td>
-        <td><input type="text" name="verified_by" value="{{ Material.verified_by }}"/></td>
+        <td><input type="text" name="verified_by" value="{{ form_material.Verified_By }}"/></td>
       </tr>
     </table>
-    <input type="submit" value="update"/> <a href="{% url 'display' %}"> Back to homepage</a>
-    {% if messages %}
-    {% for updation in messages %} 
-    <h3 style="color: rgb(32, 143, 240);">{{updation}}</h3>
-    {% endfor %}
-    {% endif %}
-
+    <input type="submit" value="submit"/> <a href="{% url 'display' %}"> </a> -->
+    
     </form>
     
-  </center>
-</body>
+  
+</body> 

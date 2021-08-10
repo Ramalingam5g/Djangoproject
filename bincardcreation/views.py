@@ -1,12 +1,13 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.views import View
-from bincardcreation.models import Material
+from bincardcreation.models import Material,MaterialsInventory
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib import messages
 from bincardcreation.forms import MaterialForm
+
 
 from datetime import datetime
 from django.http import JsonResponse
@@ -19,36 +20,42 @@ def post_method(request):
     import pdb; pdb.set_trace()
     form = MaterialForm()
     if request.method == 'POST':
+       
+        print("posted")
         form = MaterialForm(request.POST)
-    if form.is_valid():
-        form.save()
-        return redirect('/display')
+        if form.is_valid():
+            form.save()
+            return redirect('/display')
+    else:
+        material_name=MaterialsInventory.objects.all()
+        print(material_name)
 
-    context = {'form':form}
-    return render(request, 'home.html', context)
+    return render(request, 'home.html', {'form':form,'material_name':material_name})
 
-def edit(request,id):
-    serializer=Material.objects.get(id=id)
-    return render(request,'Edit.html',{'Material':serializer})
 
-def update(request, id):
 
-	material = Material.objects.get(id=id)
-	form = MaterialForm(instance=material)
+# def edit(request,id):
+#     serializer=Material.objects.get(id=id)
+#     return render(request,'Edit.html',{'Material':serializer})
 
-	if request.method == 'POST':
-		form = MaterialForm(request.POST, instance=material)
-		if form.is_valid():
-			form.save()
-			return redirect('/display')
+# def update(request, id):
 
-	context = {'form':form}
-	return render(request, 'Edit.html', context)
+# 	material = Material.objects.get(id=id)
+# 	form = MaterialForm(instance=material)
 
-def delete(request, id):
-	order = MaterialForm.objects.get(id=id)
-	order.delete()
-	return redirect('/display')
+# 	if request.method == 'POST':
+# 		form = MaterialForm(request.POST, instance=material)
+# 		if form.is_valid():
+# 			form.save()
+# 			return redirect('/display')
+
+# 	context = {'form':form}
+# 	return render(request, 'Edit.html', context)
+
+# def delete(request, id):
+# 	order = MaterialForm.objects.get(id=id)
+# 	order.delete()
+# 	return redirect('/display')
 
 	
 

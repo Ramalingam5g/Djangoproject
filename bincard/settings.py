@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'bincard.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bincard',
+        'NAME': 'materialbin',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',
