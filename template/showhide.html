@@ -1,3 +1,11 @@
+{{ Materialsinventory }}
+<select>
+    <option disabled="true" selected>--select material name----</option>
+    {% for results in Materialsinventory %}
+    
+    <option>{{ results.Material_Name}}</option>
+    {% endfor %}
+</select>
 <!-- <script type="text/javascript">
     $(function () {
         $("#purpose").on('change',(function () {
@@ -21,7 +29,7 @@
     <input type='text' class='text' name='business' value size='20' />
     
 </div> -->
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
     $(function () {
         $("#ddlPassport").change(function () {
@@ -52,5 +60,5 @@
 <div id="dv" style="display: none">
     issued to:
     <input type="text" id="txtPassportNumber" />
-</div>
+</div> -->
 

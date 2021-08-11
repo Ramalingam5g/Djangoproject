@@ -18,7 +18,7 @@
   </style>  
   </head>
 <body>  
-<form method="POST" class="post-form" action="/post_method">  
+<form method="POST" class="post-form" action="">  
         {% csrf_token %}  
     <div class="container">  
 <br>
@@ -30,11 +30,11 @@
     <center>
     <label class="col-sm-4 col-form-label">Date:</label>  
     <div class="col-sm-4">  
-      {{ form.date }}  
+      {{ form.Date }}  
     </div>
   <label class="col-sm-4 col-form-label">Document Number:</label>  
     <div class="col-sm-4">  
-      {{ form.doc_no }}  
+      {{ form.Document_Number }}  
     </div>  
     <form action="/action_page.php">
       <label for="Material">Material Name:</label>
@@ -50,7 +50,7 @@
     </form>
     <label class="col-sm-4 col-form-label">Received From:</label>  
     <div class="col-sm-4">  
-      {{ form.received_from }}  
+      {{ form.Received_From }}  
     </div>  
     <label class="col-sm-4 col-form-label">Receipt Number:</label>  
     <div class="col-sm-4">  
@@ -58,19 +58,19 @@
     </div>
     <label class="col-sm-4 col-form-label">Issue:</label>
     <div class="col-sm-4">
-      {{form.issue}} 
+      {{form.Issue_From}} 
     </div>
     <label class="col-sm-4 col-form-label">Balance:</label>
     <div class = "col-sm-4">
-      {{form.balance}}
+      {{form.Balance}}
     </div>
     <label class="col-sm-4 col-form-label">verification Date:</label>
     <div class = "col-sm-4">
-      {{form.verification_date}}
+      {{form.Verification_Date}}
     
     <label class="col-sm-2 col-form-label">Verified By:</label>
     <div class = "col-sm-4">
-      {{form.verified_by}}
+      {{form.Verified_By}}
     </div>
   
     <label class="col-sm-4 col-form-label"></label>  

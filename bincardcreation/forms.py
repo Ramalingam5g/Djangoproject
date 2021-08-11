@@ -1,5 +1,5 @@
 from django import forms  
-from bincardcreation.models import Material  
+from bincardcreation.models import *
 class MaterialForm(forms.ModelForm):  
     class Meta:  
         model = Material  

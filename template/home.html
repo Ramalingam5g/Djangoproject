@@ -118,9 +118,11 @@
 <!------ Include the above in your HEAD tag ---------->
 <h2>Material Stock Updation</h2>
 		<div class="col-md-9">
-			<form  method="POST" action="">
+			<form  method="POST" class="post-form" action="/display">
 		        {% csrf_token %}
-				
+				<div class="container"> 
+					
+
 				<script type="text/javascript">
 					$(function () {
 						$("#getid").change(function () {
@@ -159,11 +161,12 @@
 					  </div>
 					  </div>
 					</div>
+					
 				<div id="dv" style="display: none">
 					<div class="col-sm-10">     
 						<label class="=control-label col-sm-5" >Issued From:</label> 
 						<div class="col-sm-10">    
-						<input type="text" class="form-control" id="Issue_From" name="Issue_From" placeholder="{{ form.Issue_From }}">
+						<input type="text" class="form-control" id="Issue_From" name="Issue_From" placeholder="{{ form.Issue_To }}">
 						</div>
 						</div>
 					<div class="col-sm-10">          
@@ -173,47 +176,53 @@
 					    </div>
 						</div>
 				    </div>
-				
-				
-			    </div>
 				<div class="form-group">
-				  <label class="=control-label col-sm-5" >Date:</label>
-				  <div class="col-sm-10">
-				  <input type="date" class="form-control" id="Date" name="Date" value="{{ form.Date }}" >
+					<label class="control-label col-sm-5" >Balance:</label>
+					<div class="col-sm-10">
+					<input type="text" class="form-control" id="Balance" name="Balance" value="{{ form.Balance }}" >
+					</div>
 				</div>
-				</div>
+				<!-- <select>
+					<option disabled="true" selected>--select material name----</option>
+					{% for results in Materialsinventory %}
+					{{ Materialsinventory }}
+					<option>{{ results.Material_Name}}</option>
+					{% endfor %}
+				</select> -->
+				
 				<div class="form-group">
-				  <label class="=control-label col-sm-5" >Document Number:</label>
-				  <div class="col-sm-10">
-				  <input type="text" class="form-control" id= "Document_Number" name="Document_Number"  value=" {{ form.Document_Number }}" >
-				</div>
-				</div>
+					<label class="=control-label col-sm-5" >Date:</label>
+					<div class="col-sm-10">
+					<input type="date" class="form-control" id="Date" name="Date" value="{{ form.Date }}" >
+				  </div>
+				  </div>
+				  <div class="form-group">
+					<label class="=control-label col-sm-5" >Document Number:</label>
+					<div class="col-sm-10">
+					<input type="text" class="form-control" id= "Document_Number" name="Document_Number"  value=" {{ form.Document_Number }}" >
+				  </div>
+				  </div>
 				<div class="form-group">
 				  <label class="control-label col-sm-5">Verification Date:</label>
 				  <div class="col-sm-10">
-					<input type="date" class="form-control" id="Verification_Date" name="Verification_Date" value="{{ form.Verification_Date }}" >
+					<input type="date" class="form-control" id="Verification_Date" name="Verification_Date" placeholder="{{ form.Verification_Date }}" >
 				  </div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-5" >Verified by:</label>
 					<div class="col-sm-10">
-					  <input type="text" class="form-control" id="Verified_By" name="Verified_By" value="{{ form.Verified_By }}" >
+					  <input type="text" class="form-control" id="Verified_By" name="Verified_By" placeholder="{{ form.Verified_By }}" >
 					</div>
 				  </div>
-				<div class="form-group">
-					<label class="control-label col-sm-5" >Balance:</label>
-					<div class="col-sm-10">
-					  <input type="text" class="form-control" id="Balance" name="Balance" value="{{ form.Balance }}" >
-					</div>
-				</div>
 				<div class="form-group">        
 				  <div class="col-sm-offset-2 col-sm-10">
 					<!-- <button type="submit" class="btn btn-default">Submit</button> -->
-					<input type="submit" value="Insert Record">
+					<input type="submit"  value="submit"/> 
 				</div>
 				</div>
 				</form>
 				</div>
+			
 		</div>
 	</div>
 

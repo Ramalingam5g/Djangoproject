@@ -18,26 +18,78 @@ def display(request):
 
 def post_method(request):
     import pdb; pdb.set_trace()
-    # form = MaterialForm()
+
     if request.method == 'POST':
+        form = MaterialForm(request.POST)
+        
         if request.POST.get('Transaction_Types') and request.POST.get('Material_Name') and request.POST.get('Date') and request.POST.get('Document_Number') and request.POST.get('Received_From') and request.POST.get('Number_Of_Received') and request.POST.get('Issued_From') and request.POST.get('Number_Of_Issue')  and rerequest.POST.get('Balance')  and request.POST.get('Verification_Date') and request.POST.get('Verified_By'):
             saverecord=Material()
             saverecord.Transaction_Type=request.POST.get('Transaction_Types')
+            saverecord.Received_From=request.POST.get('Received_From')
+            saverecord.Number_Of_Received=request.POST.get("Number_Of_Received")
+            saverecord.Issue_From=request.POST.get('Issued_To')
+            saverecord.Number_Of_issued=request.POST.get('Number_Of_Issue')
+            saverecord.Balance=request.POST.get('Balance')    
             saverecord.Material_Name=request.POST.get('Material_Name')
             saverecord.Date=request.POST.get('Date')
             saverecord.Document_Number=request.POST.get('Document_Number')
-            saverecord.Received_From=request.POST.get('Received_From')
-            saverecord.Number_Of_Received=request.POST.get("Number_Of_Received")
-            saverecord.Issue_From=request.POST.get('Issued_From')
-            saverecord.Number_Of_issued=request.POST.get('Number_Of_Issue')
-            saverecord.Balance=request.POST.get('Balance')    
             saverecord.Verification_Date=request.POST.get('Verification_Date')
             saverecord.Verified_By=request.POST.get('Verified_By')
             saverecord.save()
+            print(saverecord)
+            return redirect('/display')
+        else:
             return render(request, 'home.html')
     else:
-            return render(request, 'home.html')
+        return render(request, 'home.html')
 
+def select_material_name(request):
+    import pdb; pdb.set_trace()
+    
+    results=MaterialsInventory.objects.all()
+    return render(request, "showhide.html",{"MaterialsInventory":results})
+
+
+# def post_method(request):
+#     import pdb; pdb.set_trace()
+#     if request.method == "POST":  
+#         form = MaterialForm(request.POST)
+#         if form.is_valid():
+#             form.instance.Transaction_Type = request.POST['Transaction_Types']
+#             form.instance.Material_Name = request.POST['Material_Name']
+#             form.instance.Date = request.POST['Date']
+#             form.instance.Document_Number = request.POST['Document_Number']
+#             form.instance.Received_From = request.POST['Received_From']
+#             form.instance.Number_Of_Received = request.POST["Number_Of_Received"]
+#             form.instance.Issue_From = request.POST['Issued_From']
+#             form.instance.Number_Of_issued = request.POST['Number_Of_Issue']
+#             form.instance.Balance = request.POST('Balance')
+#             form.instance.Verification_Date = request.POST['Verification_Date']
+#             form.instance.Verified_By = request.POST['Verified_By']
+
+#             form.save()
+#             return HttpResponseRedirect('/display')
+#         else:
+#             print(form.errors)
+#     else:
+#         form = MaterialForm()
+#         return render(request,'home.html',{'form':form})  
+
+        # return render(request, 'home.html')
+
+    #     form = MaterialForm(request.POST)  
+    #     if form.is_valid():  
+    #         try:  
+    #             form.save()  
+    #             return redirect('/display')  
+    #         except:  
+    #             pass  
+    # else:  
+    #     form = MaterialForm()  
+    # return render(request,'material.html',{'form':form})  
+    
+
+   
 
 
         
@@ -94,7 +146,7 @@ def post_method(request):
 #             # return Response(form.errors) 
 #     else:  
 #         form = MaterialForm() 
-#     return render(request, 'materials.html', {'form':form})
+#     return render(request, 'home.html', {'form':form})
 
 # def display(request):  
 #     materials = Material.objects.all()
