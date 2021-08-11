@@ -118,7 +118,7 @@
 <!------ Include the above in your HEAD tag ---------->
 <h2>Material Stock Updation</h2>
 		<div class="col-md-9">
-			<form action="" method="POST">
+			<form  method="POST" action="">
 		        {% csrf_token %}
 				
 				<script type="text/javascript">
@@ -149,13 +149,13 @@
 					<div class="col-sm-10">
 						<label class="=control-label col-sm-5" >Received From:</label>  
 						<div class="col-sm-10">
-						<input type="text" class="form-control" id="Received From" placeholder="{{ form.Received_From }}">
+						<input type="text" class="form-control" id="Received_From" name="Received_From" placeholder="{{ form.Received_From }}">
 					</div>
 					</div>
 					<div class="col-sm-10"> 
 						<label class="=control-label col-sm-5" >Number Of Received:</label> 
 						<div class="col-sm-10">
-						<input type="text" class="form-control" id="Number Of Received:" placeholder="{{ form.Number_Of_Received }}">
+						<input type="text" class="form-control" id="Number_Of_Received" name="Number_Of_Received" placeholder="{{ form.Number_Of_Received }}">
 					  </div>
 					  </div>
 					</div>
@@ -163,29 +163,18 @@
 					<div class="col-sm-10">     
 						<label class="=control-label col-sm-5" >Issued From:</label> 
 						<div class="col-sm-10">    
-						<input type="text" class="form-control" id="Issued From" placeholder="{{ form.Issue_From }}">
+						<input type="text" class="form-control" id="Issue_From" name="Issue_From" placeholder="{{ form.Issue_From }}">
 						</div>
 						</div>
 					<div class="col-sm-10">          
 						<label class="=control-label col-sm-5" >Number of issued:</label>
 						<div class="col-sm-10">
-						<input type="text" class="form-control" id="Number Of Issued:" placeholder="{{ form.Number_Of_issued }}">
+						<input type="text" class="form-control" id="Number_Of_issued" name="Number_Of_issued" placeholder="{{ form.Number_Of_issued }}">
 					    </div>
 						</div>
 				    </div>
 				
-				<div class="form-group">
-				<select>
-				  <option disabled="true" selected>--select material name--</option>
-				  {% for a in material_name %} 
-
-				  {{material_name}}
-				  <!-- <option> {{ a.Material_Name}}</option> -->
-				  {% endfor %}
-				</select>
-				  <!-- <div class="col-sm-10"> -->
-				  <!-- <input type="text" class="form-control" id="Material_Name" name="Material_Name" placeholder="Material_Name"> -->
-				<!-- </div> -->
+				
 			    </div>
 				<div class="form-group">
 				  <label class="=control-label col-sm-5" >Date:</label>
@@ -196,31 +185,31 @@
 				<div class="form-group">
 				  <label class="=control-label col-sm-5" >Document Number:</label>
 				  <div class="col-sm-10">
-				  <input type="text" class="form-control" value=" {{ form.Document_Number }}" >
+				  <input type="text" class="form-control" id= "Document_Number" name="Document_Number"  value=" {{ form.Document_Number }}" >
 				</div>
 				</div>
 				<div class="form-group">
 				  <label class="control-label col-sm-5">Verification Date:</label>
 				  <div class="col-sm-10">
-					<input type="date" class="form-control"  value="{{ form.Verification_Date }}" >
+					<input type="date" class="form-control" id="Verification_Date" name="Verification_Date" value="{{ form.Verification_Date }}" >
 				  </div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-5" >Verified by:</label>
 					<div class="col-sm-10">
-					  <input type="text" class="form-control" " value="{{ form.Verified_By }}" >
+					  <input type="text" class="form-control" id="Verified_By" name="Verified_By" value="{{ form.Verified_By }}" >
 					</div>
 				  </div>
 				<div class="form-group">
 					<label class="control-label col-sm-5" >Balance:</label>
 					<div class="col-sm-10">
-					  <input type="text" class="form-control"  value="{{ form.Balance }}" >
+					  <input type="text" class="form-control" id="Balance" name="Balance" value="{{ form.Balance }}" >
 					</div>
 				</div>
 				<div class="form-group">        
 				  <div class="col-sm-offset-2 col-sm-10">
 					<!-- <button type="submit" class="btn btn-default">Submit</button> -->
-					<input type="submit" value="Submit">
+					<input type="submit" value="Insert Record">
 				</div>
 				</div>
 				</form>

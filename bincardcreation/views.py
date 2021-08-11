@@ -18,19 +18,38 @@ def display(request):
 
 def post_method(request):
     import pdb; pdb.set_trace()
-    form = MaterialForm()
+    # form = MaterialForm()
     if request.method == 'POST':
-       
-        print("posted")
-        form = MaterialForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('/display')
+        if request.POST.get('Transaction_Types') and request.POST.get('Material_Name') and request.POST.get('Date') and request.POST.get('Document_Number') and request.POST.get('Received_From') and request.POST.get('Number_Of_Received') and request.POST.get('Issued_From') and request.POST.get('Number_Of_Issue')  and rerequest.POST.get('Balance')  and request.POST.get('Verification_Date') and request.POST.get('Verified_By'):
+            saverecord=Material()
+            saverecord.Transaction_Type=request.POST.get('Transaction_Types')
+            saverecord.Material_Name=request.POST.get('Material_Name')
+            saverecord.Date=request.POST.get('Date')
+            saverecord.Document_Number=request.POST.get('Document_Number')
+            saverecord.Received_From=request.POST.get('Received_From')
+            saverecord.Number_Of_Received=request.POST.get("Number_Of_Received")
+            saverecord.Issue_From=request.POST.get('Issued_From')
+            saverecord.Number_Of_issued=request.POST.get('Number_Of_Issue')
+            saverecord.Balance=request.POST.get('Balance')    
+            saverecord.Verification_Date=request.POST.get('Verification_Date')
+            saverecord.Verified_By=request.POST.get('Verified_By')
+            saverecord.save()
+            return render(request, 'home.html')
     else:
-        material_name=MaterialsInventory.objects.all()
-        print(material_name)
+            return render(request, 'home.html')
 
-    return render(request, 'home.html', {'form':form,'material_name':material_name})
+
+
+        
+    #     form = MaterialForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('/display')
+    # else:
+    #     material_name=MaterialsInventory.objects.all()
+        # print(material_name)
+
+    # return render(request, 'home.html', {'form':form,'material_name':material_name})
 
 
 

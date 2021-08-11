@@ -12,8 +12,9 @@ class MaterialsInventory(models.Model):
     Re_order_Level=models.IntegerField(null=True, blank=True)
     Quantity=models.IntegerField(null=True,blank=True)
     
-    class Meta:
-        db_table = "bincardcreation_materialsinventory"
+    def __str__(self):
+        return self.Material_Name
+
 
 Trans_type=(
     ('RF','Recieved from'),
@@ -33,6 +34,9 @@ class Material(models.Model):
     Balance=models.IntegerField()
     Verification_Date=models.DateField()
     Verified_By=models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.Material_Name
     
 
     
