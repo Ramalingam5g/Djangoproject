@@ -26,8 +26,8 @@ urlpatterns = [
     path('display/',views.display,name="display"),
     path('add/',views.select_material_name),
     
-    # path('edit/<int:receipt_no>', views.edit),  
-    # path('update/<int:id>', views.update),  
+    # path('edit/<str:id>', views.edit,name="edit"),  
+    path('update/<str:id>', views.update),  
     # path('delete/<int:id>', views.delete), 
 ]
 

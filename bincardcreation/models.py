@@ -26,13 +26,13 @@ Trans_type=(
 
 class Material(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    Transaction_Type=models.CharField(max_length=20,choices=Trans_type,default='RF')
+    Transaction_Type=models.CharField(max_length=20,choices=Trans_type,default='RF',null=True)
     Received_From=models.CharField(max_length=200,null=True,blank=True)
-    Number_Of_Received=models.IntegerField(null=True)
+    Number_Of_Received=models.IntegerField(null=True,blank=True)
     Issue_To=models.CharField(max_length=200,null=True,blank=True)
-    Number_Of_issued=models.IntegerField(null=True)
-    Balance=models.IntegerField()
-    Material_Name=models.ForeignKey(MaterialsInventory,on_delete = models.CASCADE)
+    Number_Of_issued=models.IntegerField(null=True,blank=True)
+    Balance=models.IntegerField(null=True,blank=True)
+    # Material_Name=models.ForeignKey(MaterialsInventory,on_delete = models.CASCADE)
     Date=models.DateField()
     Document_Number=models.IntegerField(unique=True)
     Verification_Date=models.DateField()

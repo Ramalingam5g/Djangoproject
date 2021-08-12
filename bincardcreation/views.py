@@ -16,30 +16,52 @@ def display(request):
     context = {'materials':materials} 
     return render(request,"display.html", context ) 
 
+# def post_method(request):
+#     if request.method =="POST":
+#         form = MaterialForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('/display')
+#     else:
+#         form= MaterialForm()
+#         return render(request, 'home.html', {'form':form,})
+        # material_name=MaterialsInventory.objects.all()
+        # print(material_name)
+
+    # return render(request, 'home.html', {'form':form,'material_name':material_name})
+    # import pdb; pdb.set_trace()
 def post_method(request):
     import pdb; pdb.set_trace()
-
     if request.method == 'POST':
         form = MaterialForm(request.POST)
         
-        if request.POST.get('Transaction_Types') and request.POST.get('Material_Name') and request.POST.get('Date') and request.POST.get('Document_Number') and request.POST.get('Received_From') and request.POST.get('Number_Of_Received') and request.POST.get('Issued_From') and request.POST.get('Number_Of_Issue')  and rerequest.POST.get('Balance')  and request.POST.get('Verification_Date') and request.POST.get('Verified_By'):
-            saverecord=Material()
-            saverecord.Transaction_Type=request.POST.get('Transaction_Types')
-            saverecord.Received_From=request.POST.get('Received_From')
-            saverecord.Number_Of_Received=request.POST.get("Number_Of_Received")
-            saverecord.Issue_From=request.POST.get('Issued_To')
-            saverecord.Number_Of_issued=request.POST.get('Number_Of_Issue')
-            saverecord.Balance=request.POST.get('Balance')    
-            saverecord.Material_Name=request.POST.get('Material_Name')
-            saverecord.Date=request.POST.get('Date')
-            saverecord.Document_Number=request.POST.get('Document_Number')
-            saverecord.Verification_Date=request.POST.get('Verification_Date')
-            saverecord.Verified_By=request.POST.get('Verified_By')
-            saverecord.save()
-            print(saverecord)
-            return redirect('/display')
+        
+        # if request.POST.get('Transaction_Types') and request.POST.get('Material_Name') and request.POST.get('Date') and request.POST.get('Document_Number') and request.POST.get('Received_From') and request.POST.get('Number_Of_Received') and request.POST.get('Issued_From') and request.POST.get('Number_Of_Issue')  and rerequest.POST.get('Balance')  and request.POST.get('Verification_Date') and request.POST.get('Verified_By'):
+        saverecord=Material()
+        saverecord.Transaction_Type=request.POST.get('Transaction_Types')
+        if request.POST.get('Received_From') == '':
+             saverecord.Received_From = None
         else:
-            return render(request, 'home.html')
+            saverecord.Received_From=request.POST.get('Received_From')
+        if request.POST.get("Number_Of_Received") =='':
+            saverecord.Number_Of_Received = None
+        else:
+            saverecord.Number_Of_Received=request.POST.get("Number_Of_Received")
+
+
+        
+        saverecord.Issue_From=request.POST.get('Issued_To')
+        saverecord.Number_Of_issued=request.POST.get('Number_Of_Issue')
+        saverecord.Balance=request.POST.get('Balance')    
+        saverecord.Material_Name=request.POST.get('Material_Name')
+        saverecord.Date=request.POST.get('Date')
+        saverecord.Document_Number=request.POST.get('Document_Number')
+        saverecord.Verification_Date=request.POST.get('Verification_Date')
+        saverecord.Verified_By=request.POST.get('Verified_By')
+        saverecord.save()
+        # print(saverecord)
+        return render(request,'home.html')
+        
     else:
         return render(request, 'home.html')
 
@@ -48,6 +70,26 @@ def select_material_name(request):
     
     results=MaterialsInventory.objects.all()
     return render(request, "showhide.html",{"MaterialsInventory":results})
+
+# def edit(request,id):
+#     serializer=Material.objects.get(id=id)
+#     return render(request,'home.html',{'Material':serializer})
+
+def update(request, id):
+    
+	# import pdb;pdb.set_trace()
+	material = Material.objects.get(id=id)
+	form = MaterialForm(instance=material)
+
+	if request.method == 'POST':
+		form = MaterialForm(request.POST, instance=material)
+		if form.is_valid():
+			form.save()
+			return redirect('/display')
+
+	context = {'form':form,'id':material.id,'mat':material}
+	return render(request, 'home.html', context)
+
 
 
 # def post_method(request):

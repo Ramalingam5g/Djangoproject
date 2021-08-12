@@ -77,8 +77,8 @@
 </body>
 
 </html> -->
-<style>
 
+<style>
 .contact{
 	padding: 4%;
 	height: 400px;
@@ -117,69 +117,98 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 <h2>Material Stock Updation</h2>
-		<div class="col-md-9">
-			<form  method="POST" class="post-form" action="/display">
-		        {% csrf_token %}
-				<div class="container"> 
+	<div class="col-md-9">
+		<form  method="POST" class="post-form" action="">
+	        {% csrf_token %}
+			<div class="container"> 
+					<script type="text/javascript">
 					
-
-				<script type="text/javascript">
+					$(function () {
+						$("#getid").change(function () {
+							if ($(this).val() == "IT") {
+								$("#dv").show();
+							} else {
+								$("#dv").hide();
+							}
+						});
+					});
 					$(function () {
 						$("#getid").change(function () {
 							if ($(this).val() == "RF") {
 								$("#dvPassport").show();
 							} else {
 								$("#dvPassport").hide();
-							if ($(this).val()=="IS"){
-								$("#dv").show();
-							} else {
-								$("dv").hide();
-							}
-				
+							
 							}
 						});
 					});
 				</script>
-				<label class="=control-label col-sm-5" >Transaction Type:</label>  
-				<span>{{ Transaction_Type }}</span>
-				<select id="getid">
-					<option value="IS">Issued to</option>
+				<!-- <label class="=control-label col-sm-5" >Transaction Type:</label>  -->
+				<div class="form-group">
+					<label>Transaction type </label>
+					<!-- <input type="" class="form-control" id="Transaction_Type" name="Transaction_Type" >{{ form.Transaction_Type }} -->
+					
+				</div>
+				<select id="getid" id="Transaction_Type" name="Transaction_Type">
+					<option disabled="true" id="Transaction_Type" name="Transaction_Type" selected><b>--Select Transaction Type--</b></option>
+					<option value="IT">Issued to</option>
 					<option value="RF">Received From</option>
 				</select>
 				<hr /> 
+			<div>
 				<div id="dvPassport" style="display: none">
 					<div class="col-sm-10">
 						<label class="=control-label col-sm-5" >Received From:</label>  
 						<div class="col-sm-10">
+						{% if id %}	
+						<input type="text" class="form-control" id="Received_From" name="Received_From" placeholder="{{ mat.Received_From }}">
+						{% else %}
 						<input type="text" class="form-control" id="Received_From" name="Received_From" placeholder="{{ form.Received_From }}">
-					</div>
+						{% endif %}
+					    </div>
 					</div>
 					<div class="col-sm-10"> 
 						<label class="=control-label col-sm-5" >Number Of Received:</label> 
 						<div class="col-sm-10">
+						{% if id %}
+						<input type="text" class="form-control" id="Number_Of_Received" name="Number_Of_Received" placeholder="{{ mat.Number_Of_Received }}">
+						{% else %}
 						<input type="text" class="form-control" id="Number_Of_Received" name="Number_Of_Received" placeholder="{{ form.Number_Of_Received }}">
-					  </div>
-					  </div>
-					</div>
-					
+						{% endif %}
+					    </div>
+					</div>	
+				</div>
 				<div id="dv" style="display: none">
 					<div class="col-sm-10">     
-						<label class="=control-label col-sm-5" >Issued From:</label> 
-						<div class="col-sm-10">    
+						<label class="=control-label col-sm-5" >Issued To:</label> 
+						<div class="col-sm-10">
+						{% if id %}	    
+						<input type="text" class="form-control" id="Issue_From" name="Issue_From" placeholder="{{ mat.Issue_To }}">
+						{% else %}
 						<input type="text" class="form-control" id="Issue_From" name="Issue_From" placeholder="{{ form.Issue_To }}">
-						</div>
-						</div>
+						{% endif %}
+					    </div>
+					</div>
 					<div class="col-sm-10">          
 						<label class="=control-label col-sm-5" >Number of issued:</label>
 						<div class="col-sm-10">
+						{%if id %}
+						<input type="text" class="form-control" id="Number_Of_issued" name="Number_Of_issued" placeholder="{{ mat.Number_Of_issued }}">
+					    {% else %}
 						<input type="text" class="form-control" id="Number_Of_issued" name="Number_Of_issued" placeholder="{{ form.Number_Of_issued }}">
+						{% endif%}
 					    </div>
-						</div>
-				    </div>
+					</div>
+				</div>
+			</div>
 				<div class="form-group">
 					<label class="control-label col-sm-5" >Balance:</label>
 					<div class="col-sm-10">
+					{% if id%}	
+					<input type="text" class="form-control" id="Balance" name="Balance" value="{{ mat.Balance }}" >
+					{% else %}
 					<input type="text" class="form-control" id="Balance" name="Balance" value="{{ form.Balance }}" >
+					{% endif %}
 					</div>
 				</div>
 				<!-- <select>
@@ -191,41 +220,54 @@
 				</select> -->
 				
 				<div class="form-group">
-					<label class="=control-label col-sm-5" >Date:</label>
+					<label class="=control-label col-sm-5" >Date:</label>{{id}}
 					<div class="col-sm-10">
+					{% if id %}
+					<input type="text" class="form-control" id="Date" name="Date" value="{{ mat.Date }}" >
+					{% else %}
 					<input type="date" class="form-control" id="Date" name="Date" value="{{ form.Date }}" >
+					{% endif %}
 				  </div>
-				  </div>
-				  <div class="form-group">
+				</div>
+				<div class="form-group">
 					<label class="=control-label col-sm-5" >Document Number:</label>
 					<div class="col-sm-10">
+					{%if id %}
+					<input type="text" class="form-control" id= "Document_Number" name="Document_Number"  value=" {{ mat.Document_Number }}" >
+					{% else %}
 					<input type="text" class="form-control" id= "Document_Number" name="Document_Number"  value=" {{ form.Document_Number }}" >
-				  </div>
-				  </div>
+				    {% endif %}
+				   </div>
+				</div>
 				<div class="form-group">
-				  <label class="control-label col-sm-5">Verification Date:</label>
-				  <div class="col-sm-10">
-					<input type="date" class="form-control" id="Verification_Date" name="Verification_Date" placeholder="{{ form.Verification_Date }}" >
-				  </div>
+				    <label class="control-label col-sm-5">Verification Date:</label>
+				    <div class="col-sm-10">
+				    {%if id %}
+					<input type="date" class="form-control" id="Verification_Date" name="Verification_Date" value="{{ mat.Verification_Date }}" >
+					{% else %} 
+					<input type="date" class="form-control" id="Verification_Date" name="Verification_Date" value="{{ form.Verification_Date }}" >
+				    {% endif %} 
+				    </div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-5" >Verified by:</label>
 					<div class="col-sm-10">
-					  <input type="text" class="form-control" id="Verified_By" name="Verified_By" placeholder="{{ form.Verified_By }}" >
+                    {%if id%}
+					<input type="text" class="form-control" id="Verified_By" name="Verified_By" value="{{ mat.Verified_By }}" >
+					{% else %}
+					<input type="text" class="form-control" id="Verified_By" name="Verified_By" value="{{ form.Verified_By }}" >
+					{% endif %}
 					</div>
 				  </div>
 				<div class="form-group">        
-				  <div class="col-sm-offset-2 col-sm-10">
+				    <div class="col-sm-offset-2 col-sm-10">
 					<!-- <button type="submit" class="btn btn-default">Submit</button> -->
 					<input type="submit"  value="submit"/> 
+				    </div>
 				</div>
-				</div>
-				</form>
-				</div>
+			</div>
+		</form>
+    </div>
 			
-		</div>
-	</div>
-
-</div> 
 
 

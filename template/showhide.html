@@ -1,11 +1,90 @@
-{{ Materialsinventory }}
+<html>
+
+<head>
+	<link
+	rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<style>
+		.i-am-centered {
+			margin: auto;
+			max-width: 300px;
+			padding-top: 20%;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="i-am-centered">
+		<form method="POST">
+			{% csrf_token %}
+			<div class="form-group">
+				<label>Transaction type </label>
+				{{ form.transaction_type }}
+			</div>
+			<div class="form-group">
+				<label>Material Name </label>
+				{{ form.material_name }}
+			</div>
+			<div class="form-group">
+				<label>Date</label>
+				{{ form.date }}
+			</div>
+			<div class="form-group">
+				<label>Doc.no</label>
+				{{ form.doc_no }}
+			</div>
+            
+<script type="text/javascript">
+    function ShowHideDiv() {
+        var getid = document.getElementById("getid");
+        var dvPassport = document.getElementById("dvPassport");
+        dvPassport.style.display = getid.value == "i" ? "block" : "none";
+        dvPassport.style.display = getid.value == "r" ? "block" : "none";
+    }
+</script>
+<span>Transaction type</span>
+    <select id = "getid" onchange = "ShowHideDiv()">
+        <option value="r">Received From</option>
+        <option value="i">issued to</option>            
+    </select>
+<hr />
+<div id="dvPassport" style="display: none">
+    Received From:
+    <input type="text" id="txtPassportNumber" />
+    
+</div>
+            
+           
+            <div class="form-group">
+				<label>issue</label>
+				{{ form.issue }}
+			</div>
+            <div class="form-group">
+				<label>balance</label>
+				{{ form.balance }}
+			</div>
+            <div class="form-group">
+				<label>verification date</label>
+				{{ form.verification_date }}
+			</div>
+            <div class="form-group">
+				<label>verified by</label>
+				{{ form.verified_by }}
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
+</body>
+
+</html> -->
+<!-- {{ Materialsinventory }}
 <select>
     <option disabled="true" selected>--select material name----</option>
     {% for results in Materialsinventory %}
     
     <option>{{ results.Material_Name}}</option>
     {% endfor %}
-</select>
+</select> -->
 <!-- <script type="text/javascript">
     $(function () {
         $("#purpose").on('change',(function () {
