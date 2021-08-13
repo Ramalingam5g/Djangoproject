@@ -1,4 +1,12 @@
-<html>
+<select>
+    <option disabled="true" selected>--select material name----</option>
+    {% for results in MaterialsInventory %}
+    {{ MaterialsInventory }}
+    <option>{{ results.Material_Name}}</option>
+    {% endfor %}
+</select>
+
+<!-- <html>
 
 <head>
 	<link
@@ -74,9 +82,8 @@
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>
-</body>
+</body> -->
 
-</html> -->
 <!-- {{ Materialsinventory }}
 <select>
     <option disabled="true" selected>--select material name----</option>

@@ -20,19 +20,19 @@ class MaterialsInventory(models.Model):
 
 
 Trans_type=(
-    ('RF','Recieved from'),
-    ("IT","Issued to"),
+    ('Received From','Recieved From'),
+    ("Issued To","Issued To"),
 )
 
 class Material(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    Transaction_Type=models.CharField(max_length=20,choices=Trans_type,default='RF',null=True)
+    Transaction_Type=models.CharField(max_length=20,choices=Trans_type,default='Received From',null=True)
     Received_From=models.CharField(max_length=200,null=True,blank=True)
     Number_Of_Received=models.IntegerField(null=True,blank=True)
     Issue_To=models.CharField(max_length=200,null=True,blank=True)
-    Number_Of_issued=models.IntegerField(null=True,blank=True)
+    Number_Of_Issued=models.IntegerField(null=True,blank=True)
     Balance=models.IntegerField(null=True,blank=True)
-    # Material_Name=models.ForeignKey(MaterialsInventory,on_delete = models.CASCADE)
+    Material_Name=models.ForeignKey(MaterialsInventory,on_delete = models.CASCADE,related_name="display",null=True)
     Date=models.DateField()
     Document_Number=models.IntegerField(unique=True)
     Verification_Date=models.DateField()

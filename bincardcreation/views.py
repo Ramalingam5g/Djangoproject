@@ -32,27 +32,47 @@ def display(request):
     # import pdb; pdb.set_trace()
 def post_method(request):
     import pdb; pdb.set_trace()
+    material_name=MaterialsInventory.objects.all()
+    
     if request.method == 'POST':
         form = MaterialForm(request.POST)
         
         
         # if request.POST.get('Transaction_Types') and request.POST.get('Material_Name') and request.POST.get('Date') and request.POST.get('Document_Number') and request.POST.get('Received_From') and request.POST.get('Number_Of_Received') and request.POST.get('Issued_From') and request.POST.get('Number_Of_Issue')  and rerequest.POST.get('Balance')  and request.POST.get('Verification_Date') and request.POST.get('Verified_By'):
         saverecord=Material()
-        saverecord.Transaction_Type=request.POST.get('Transaction_Types')
+        saverecord.Transaction_Type=request.POST.get('Transaction_Type')
+        print(saverecord.Transaction_Type)
+        
         if request.POST.get('Received_From') == '':
-             saverecord.Received_From = None
+            saverecord.Received_From = None
         else:
             saverecord.Received_From=request.POST.get('Received_From')
         if request.POST.get("Number_Of_Received") =='':
             saverecord.Number_Of_Received = None
         else:
             saverecord.Number_Of_Received=request.POST.get("Number_Of_Received")
+    
+        if request.POST.get('Issue_To') == '':
+            saverecord.Issue_To = None
+        else:
+            
+            saverecord.Issue_To=request.POST.get('Issue_To')
+
+        if request.POST.get("Number_Of_Issued") =='':
+            saverecord.Number_Of_Issued = None
+        else:
+            no_of_issued = request.POST.get("Number_Of_Issued")
+            saverecord.Number_Of_Issued= int(no_of_issued)
+        
+            
+            # saverecord.Issue_From=request.POST.get('Issued_To')
+            # saverecord.Number_Of_issued=request.POST.get('Number_Of_Issue')
 
 
         
-        saverecord.Issue_From=request.POST.get('Issued_To')
-        saverecord.Number_Of_issued=request.POST.get('Number_Of_Issue')
+        
         saverecord.Balance=request.POST.get('Balance')    
+        print(saverecord.Balance)
         saverecord.Material_Name=request.POST.get('Material_Name')
         saverecord.Date=request.POST.get('Date')
         saverecord.Document_Number=request.POST.get('Document_Number')
@@ -63,13 +83,18 @@ def post_method(request):
         return render(request,'home.html')
         
     else:
-        return render(request, 'home.html')
+        # form = MaterialForm.objects.all(),{"mat":form}
+        return render(request, 'home.html',{'mat':material_name})
 
-def select_material_name(request):
-    import pdb; pdb.set_trace()
+# def materialsinventory(request):
+#     mat=MaterialsInventory.objects.all()
+#     return render(request,'form.html',{'data':mat})
+
+# def select_material_name(request):
+#     # import pdb; pdb.set_trace()
     
-    results=MaterialsInventory.objects.all()
-    return render(request, "showhide.html",{"MaterialsInventory":results})
+#     results=MaterialsInventory.objects.all()
+#     return render(request, "form.html",{"MaterialsInventory":results})
 
 # def edit(request,id):
 #     serializer=Material.objects.get(id=id)
@@ -98,13 +123,11 @@ def update(request, id):
 #         form = MaterialForm(request.POST)
 #         if form.is_valid():
 #             form.instance.Transaction_Type = request.POST['Transaction_Types']
+
 #             form.instance.Material_Name = request.POST['Material_Name']
 #             form.instance.Date = request.POST['Date']
 #             form.instance.Document_Number = request.POST['Document_Number']
-#             form.instance.Received_From = request.POST['Received_From']
-#             form.instance.Number_Of_Received = request.POST["Number_Of_Received"]
-#             form.instance.Issue_From = request.POST['Issued_From']
-#             form.instance.Number_Of_issued = request.POST['Number_Of_Issue']
+
 #             form.instance.Balance = request.POST('Balance')
 #             form.instance.Verification_Date = request.POST['Verification_Date']
 #             form.instance.Verified_By = request.POST['Verified_By']
@@ -217,10 +240,10 @@ def update(request, id):
 #     context = {'materials':materials} 
 #     return render(request,"display.html", context )    
 
-# def delete(request, id):  
-#     serializer = Material.objects.get(id=id)  
-#     serializer.delete()  
-#     return redirect("/display")
+def delete(request, id):  
+    serializer = Material.objects.get(id=id)  
+    serializer.delete()  
+    return redirect("/display")
 
 
     
