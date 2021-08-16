@@ -24,7 +24,7 @@ urlpatterns = [
     path('post_method',views.post_method,),
     path('',views.display),
     path('display/',views.display,name="display"),
-    # path('add/',views.select_material_name),
+    path('add/',views.select_material_name),
     
     # path('edit/<str:id>', views.edit,name="edit"),  
     path('update/<str:id>', views.update),  

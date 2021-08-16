@@ -31,7 +31,7 @@ def display(request):
     # return render(request, 'home.html', {'form':form,'material_name':material_name})
     # import pdb; pdb.set_trace()
 def post_method(request):
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     material_name=MaterialsInventory.objects.all()
     
     if request.method == 'POST':
@@ -84,17 +84,33 @@ def post_method(request):
         
     else:
         # form = MaterialForm.objects.all(),{"mat":form}
-        return render(request, 'home.html',{'mat':material_name})
+        return render(request, 'home.html',{'mat_name':material_name})
 
 # def materialsinventory(request):
 #     mat=MaterialsInventory.objects.all()
 #     return render(request,'form.html',{'data':mat})
 
-# def select_material_name(request):
-#     # import pdb; pdb.set_trace()
+def select_material_name(request):
+    results=MaterialsInventory.objects.all()
+    mydict={};
+    import pdb;pdb.set_trace()
+    for data in results:
+        mydict[data.Material_Name] = data.Quantity;
+    context={'MaterialsInventory':mydict,'mat_name':results}
+    return render(request, "home.html",context)
+
+
+    # empty dict = []; 
+    # dict.push({
+    #     key:   "Material_Name",
+    #     value: "Quantity"
+    # });
+    # mydict = {}
+    # get_materials={'Material_Name',}
     
-#     results=MaterialsInventory.objects.all()
-#     return render(request, "form.html",{"MaterialsInventory":results})
+    # results=MaterialsInventory.objects.get(mydict)
+    
+    # return render(request, "form.html",{"MaterialsInventory":results})
 
 # def edit(request,id):
 #     serializer=Material.objects.get(id=id)
