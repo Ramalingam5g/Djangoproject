@@ -124,10 +124,12 @@
 		<form  method="POST" class="post-form" action="">
 	        {% csrf_token %}
 			
-					<script type="text/javascript">
+				<script type="text/javascript">
 					
 					$(function () {
+						alert("hello")
 						$("#getid").change(function () {
+							alert("RF")
 							if ($(this).val() == "Received From") {
 								$("#dv").show();
 							} else {
@@ -138,9 +140,11 @@
 					$(function () {
 						$("#getid").change(function () {
 							if ($(this).val() == "Issued To") {
+								alert("issued")
 								$("#issues").show();
 							} else {
 								$("#issues").hide();
+
 							
 							}
 						});
@@ -151,8 +155,8 @@
 						console.log(material)
 						var x =material.replace(/&#x27;/g, '"');
 						console.log(x)
-						var convert_dict = JSON.parse(x)
-						console.log(convert_dict)
+						var d = JSON.parse(x)
+						console.log(d)
 						var matname=document.getElementById("Material_Names").value;
 						console.log(matname)
 						var mat_quantity=d[matname]
@@ -165,33 +169,41 @@
 						var convert_integer=parseInt(no_of_received)
 						console.log(typeof(ints))
 						if (no_of_issued!=""){
-							var total_balance=mat_quantity - convert_int
+							var balance=mat_quantity - convert_int
 							alert(balance)
 							console.log(typeof(balance))
-							document.getElementById('Balances').value = total_balance;
+							document.getElementById('Balances').value = balance;
 						}
 						else{
-							var total_balance1=mat_quantity + convert_integer
+							var balance1=mat_quantity + convert_integer
 							console.log(typeof(balance1))
 							alert(balance1)
-							document.getElementById('Balances').value = total_balance1;
+							document.getElementById('Balances').value = balance1;
 						}
-						
+					$('#Material_Names').on('change',function(){
+                        $('#Material_Names').html($(this).val());   
+                    });
 	 
 	  
 	                   }
 				</script>
-				<div class="container"> 
+				 
+				    <div class="form-group">
 					<label class="=control-label col-sm-5" ><b>Material Name:</b></label> 
 					<select id='Material_Names' >
+						{% if id %}
+						<input type="text" class="form-control" id=Material_Names" name="Material_Names" value="{{ mat.Material_Name }}" >
+						{% else %}
 						<option disabled='true' selected><b>--Select Material Name--</b></option>
 						{% for select in mat_name %}
-						
 						<option>{{ select.Material_Name}}</option>
-						
 						{% endfor %}
+						{% endif %} 
 					</select>
-				<label class="=control-label col-sm-5" ><b>Transaction Type:</b></label> 
+				    </div>
+					<!-- {{mat.Issue_To}} -->
+				<div class="form-group">
+				<label class="=control-label col-sm-5" ><b>Transaction Type:</b></label>
 				<select id="getid" id="Transaction_Type" name="Transaction_Type" >
 				{% if id %}	
 				<option  id="Transaction_Type" name="Transaction_Type" value="{{mat.Transaction_Type}}" selected><b>{{mat.Transaction_Type}}</b></option>
@@ -201,54 +213,77 @@
 					<option value="Issued To">Issued To</option>
 				</select>
 				{% endif %} 
-			<div>
-				<div id="issues" style="display: none">
-					<div class="form-group">
-						<label class="=control-label col-sm-5" ><b>Issued To:</b></label>  
-						<div class="col-sm-10">
-						{% if id %}	
-						<input type="text" class="form-control" id="Issue_To" name="Issue_To" placeholder="{{ mat.Issue_To }}">
-						{% else %}
-						<input type="text" class="form-control" id="Issue_To" name="Issue_To" placeholder="{{ form.Issue_To }}">
-						{% endif %}
-					    </div>
-					</div>
-					<div class="form-group"> 
-						<label class="=control-label col-sm-5" ><b>Number Of Issued :</b></label> 
-						<div class="col-sm-10">
-						{% if id %}
-						<input type="text" class="form-control" id="Number_Of_Issued" name="Number_Of_Issued" placeholder="{{ mat.Number_Of_Issued }}">
-						{% else %}
-						<input type="text" class="form-control" id="Number_Of_Issued" name="Number_Of_Issued" onchange="myFunction()" placeholder="{{ form.Number_Of_Issued }}">
-						{% endif %}
-					    </div>
-					</div>	
 				</div>
-				<div id="dv" style="display: none">
-					<div class="form-group">     
-						<label class="=control-label col-sm-5" ><b>Received From:</b></label> 
-						<div class="col-sm-10">
-						{% if id %}	    
-						<input type="text" class="form-control" id="Received_From" name="Received_From" placeholder="{{ mat.Received_From }}">
-						{% else %}
-						<input type="text" class="form-control" id="Received_From" name="Received_From" placeholder="{{ form.Received_From }}">
-						{% endif %}
-					    </div>
+
+			<!-- {% if mat.id %} -->
+				<h1>{{mat.Issue_To}}</h1>
+				{% if mat.Received_From != 'None' %}
+				<label class="=control-label col-sm-5" ><b>Received From:</b></label>
+				<input type="text" value="{{mat.Issue_To}}">  
+				<input type="text" value="{{mat.Received_From}}">
+				<label class="=control-label col-sm-5" ><b>No. Of Received:</b></label> 
+				<input type="text" value="{{mat.Number_Of_Received}}">
+				{% elif mat.Issue_To != 'None' %}
+				<input type="text" value="{{mat.Issue_To}}">
+				<input type="text" value="{{mat.Number_Of_Issued}}">
+				{% endif %}
+
+			<!-- {% else %} -->
+				<div>
+					<div id="issues" style="display: none">
+						<div class="form-group">
+							<label class="=control-label col-sm-5" ><b>Issued To:</b></label>  
+							<div class="col-sm-10">
+							{% if id %}	
+							
+							<input type="text" class="form-control" id="Issue_To" name="Issue_To" placeholder="{{ mat.Issue_To }}"> -->
+							{% else %}
+							<input type="text" class="form-control" id="Issue_To" name="Issue_To" placeholder="{{ form.Issue_To }}">
+							{% endif %}
+							</div>
+						</div>
+						<div class="form-group"> 
+							<label class="=control-label col-sm-5" ><b>Number Of Issued :</b></label> 
+							<div class="col-sm-10">
+							{% if id %}
+							<input type="text" class="form-control" id="Number_Of_Issued" name="Number_Of_Issued" placeholder="{{ mat.Number_Of_Issued }}">
+							{% else %}
+							<input type="text" class="form-control" id="Number_Of_Issued" name="Number_Of_Issued" onchange="myFunction()" placeholder="{{ form.Number_Of_Issued }}">
+							{% endif %}
+							</div>
+						</div>	
 					</div>
-					<div class="form-group">          
-						<label class="=control-label col-sm-5" ><b>Number of Received:</b></label>
-						<div class="col-sm-10">
-						{%if id %}
-						<input type="text" class="form-control" id="Number_Of_Received" name="Number_Of_Received" placeholder="{{ mat.Number_Of_Received }}">
-					    {% else %}
-						<input type="text" class="form-control" id="Number_Of_Received" name="Number_Of_Received" onchange="myFunction()" placeholder="{{ form.Number_Of_Received }}">
-						{% endif%}
-					    </div>
+					<div id="dv" style="display: none">
+						<div class="form-group">     
+							<label class="=control-label col-sm-5" ><b>Received From:</b></label> 
+							<div class="col-sm-10">
+							{% if id %}	    
+							<input type="text" class="form-control" id="Received_From" name="Received_From" placeholder="{{ mat.Received_From }}">
+							{% else %}
+							<input type="text" class="form-control" id="Received_From" name="Received_From" placeholder="{{ form.Received_From }}">
+							{% endif %}
+							</div>
+						</div>
+						<div class="form-group">          
+							<label class="=control-label col-sm-5" ><b>Number of Received:</b></label>
+							<div class="col-sm-10">
+							{%if id %}
+							<input type="text" class="form-control" id="Number_Of_Received" name="Number_Of_Received" placeholder="{{ mat.Number_Of_Received }}">
+							{% else %}
+							<input type="text" class="form-control" id="Number_Of_Received" name="Number_Of_Received" onchange="myFunction()" placeholder="{{ form.Number_Of_Received }}">
+							{% endif%}
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
+				</div> 
+			<!-- {% endif  %} -->
+
+
+
+
+		
 				<div class="form-group">
-					<label class="control-label col-sm-5" >Balance:</label>
+					<label class="control-label col-sm-5" ><b>Balance:</b></label>
 					<div class="col-sm-10">
 					{% if id%}	
 					<input type="text" class="form-control" id="Balance" name="Balance" value="{{ mat.Balance }}" >

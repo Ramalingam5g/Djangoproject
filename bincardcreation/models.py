@@ -38,8 +38,7 @@ class Material(models.Model):
     Verification_Date=models.DateField()
     Verified_By=models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.Material_Name
+    
     
 
     

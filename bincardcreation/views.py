@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib import messages
 from bincardcreation.forms import MaterialForm
-
+from .serializers import *
 
 from datetime import datetime
 from django.http import JsonResponse
@@ -86,7 +86,7 @@ def post_method(request):
         saverecord.Verified_By=request.POST.get('Verified_By')
         saverecord.save()
         # print(saverecord)
-        return render(request,'home.html')
+        return redirect('/display')
         
     else:
         # form = MaterialForm.objects.all(),{"mat":form}
@@ -124,7 +124,7 @@ def select_material_name(request):
 
 def update(request, id):
     
-	# import pdb;pdb.set_trace()
+	import pdb;pdb.set_trace()
 	material = Material.objects.get(id=id)
 	form = MaterialForm(instance=material)
 
@@ -133,8 +133,9 @@ def update(request, id):
 		if form.is_valid():
 			form.save()
 			return redirect('/display')
-
-	context = {'form':form,'id':material.id,'mat':material}
+	mat =  Materialserializers(material).data
+	context = {'form':form,'id':material.id,'mat':mat}
+	print("------",material)    
 	return render(request, 'home.html', context)
 
 
