@@ -37,9 +37,9 @@
 <script type="text/javascript">
     function ShowHideDiv() {
         var getid = document.getElementById("getid");
-        var dvPassport = document.getElementById("dvPassport");
-        dvPassport.style.display = getid.value == "i" ? "block" : "none";
-        dvPassport.style.display = getid.value == "r" ? "block" : "none";
+        var issues = document.getElementById("issues");
+        issues.style.display = getid.value == "i" ? "block" : "none";
+        issues.style.display = getid.value == "r" ? "block" : "none";
     }
 </script>
 <span>Transaction type</span>
@@ -48,7 +48,7 @@
         <option value="i">issued to</option>            
     </select>
 <hr />
-<div id="dvPassport" style="display: none">
+<div id="issues" style="display: none">
     Issued To:
     <input type="text" id="txtPassportNumber" />
     
@@ -123,16 +123,7 @@
 
 		<form  method="POST" class="post-form" action="">
 	        {% csrf_token %}
-			<div class="container"> 
-				<label class="=control-label col-sm-5" ><b>Material Name:</b></label> 
-				<select id='Material_Names' >
-					<option disabled='true' selected><b>--Select Material Name--</b></option>
-					{% for select in mat_name %}
-					
-					<option>{{ select.Material_Name}}</option>
-					
-					{% endfor %}
-				</select>
+			
 					<script type="text/javascript">
 					
 					$(function () {
@@ -147,57 +138,71 @@
 					$(function () {
 						$("#getid").change(function () {
 							if ($(this).val() == "Issued To") {
-								$("#dvPassport").show();
+								$("#issues").show();
 							} else {
-								$("#dvPassport").hide();
+								$("#issues").hide();
 							
 							}
 						});
 					});
 					function myFunction() {
+						
 						var material = '{{MaterialsInventory}}';
-						var y=document.getElementById('Material_Names').value;
-						alert('hello')
-						material.hasOwnProperty("y")
-						{
-							alert('true')
+						console.log(material)
+						var x =material.replace(/&#x27;/g, '"');
+						console.log(x)
+						var convert_dict = JSON.parse(x)
+						console.log(convert_dict)
+						var matname=document.getElementById("Material_Names").value;
+						console.log(matname)
+						var mat_quantity=d[matname]
+						console.log(typeof(mat_quantity))
+						var no_of_issued=document.getElementById("Number_Of_Issued").value;
+						var convert_int=parseInt(no_of_issued)
+						console.log(typeof(int))
+		            
+						var no_of_received=document.getElementById("Number_Of_Received").value;
+						var convert_integer=parseInt(no_of_received)
+						console.log(typeof(ints))
+						if (no_of_issued!=""){
+							var total_balance=mat_quantity - convert_int
+							alert(balance)
+							console.log(typeof(balance))
+							document.getElementById('Balances').value = total_balance;
 						}
-				
-						alert(y)
-						var x=document.getElementById("Number_Of_Issued").value;
-		                alert(x)
+						else{
+							var total_balance1=mat_quantity + convert_integer
+							console.log(typeof(balance1))
+							alert(balance1)
+							document.getElementById('Balances').value = total_balance1;
+						}
+						
 	 
 	  
 	                   }
 				</script>
-				
-				<!-- <label class="=control-label col-sm-5" ><b>Transaction Type:</b></label>   -->
-				<div class="form-group">
-					<div class="col-sm-10">
+				<div class="container"> 
+					<label class="=control-label col-sm-5" ><b>Material Name:</b></label> 
+					<select id='Material_Names' >
+						<option disabled='true' selected><b>--Select Material Name--</b></option>
+						{% for select in mat_name %}
 						
-						<div class="col-sm-10">
-						{% if id %}	
-						{{ mat.Transaction_Type }}
-						{% else %}
-						{{ form.Transaction_Type }}	
-						{% endif %}
-					    </div>
-					</div>
-					<!-- <label>Transaction type: {{ form.Transaction_Type }}</label>
-					{{ Transaction_Type}} -->
-					
-					
-				</div>
+						<option>{{ select.Material_Name}}</option>
+						
+						{% endfor %}
+					</select>
 				<label class="=control-label col-sm-5" ><b>Transaction Type:</b></label> 
 				<select id="getid" id="Transaction_Type" name="Transaction_Type" >
+				{% if id %}	
+				<option  id="Transaction_Type" name="Transaction_Type" value="{{mat.Transaction_Type}}" selected><b>{{mat.Transaction_Type}}</b></option>
+				{% else %}
 					<option disabled="true" id="Transaction_Type" name="Transaction_Type" selected><b>--Select Transaction Type--</b></option>
 					<option value="Received From">Received From </option>
 					<option value="Issued To">Issued To</option>
 				</select>
-				
-				<hr /> 
+				{% endif %} 
 			<div>
-				<div id="dvPassport" style="display: none">
+				<div id="issues" style="display: none">
 					<div class="form-group">
 						<label class="=control-label col-sm-5" ><b>Issued To:</b></label>  
 						<div class="col-sm-10">
@@ -236,19 +241,19 @@
 						{%if id %}
 						<input type="text" class="form-control" id="Number_Of_Received" name="Number_Of_Received" placeholder="{{ mat.Number_Of_Received }}">
 					    {% else %}
-						<input type="text" class="form-control" id="Number_Of_Received" name="Number_Of_Received" placeholder="{{ form.Number_Of_Received }}">
+						<input type="text" class="form-control" id="Number_Of_Received" name="Number_Of_Received" onchange="myFunction()" placeholder="{{ form.Number_Of_Received }}">
 						{% endif%}
 					    </div>
 					</div>
 				</div>
 			</div>
 				<div class="form-group">
-					<label class="control-label col-sm-5" ><b>Balance:</b></label>
+					<label class="control-label col-sm-5" >Balance:</label>
 					<div class="col-sm-10">
 					{% if id%}	
 					<input type="text" class="form-control" id="Balance" name="Balance" value="{{ mat.Balance }}" >
 					{% else %}
-					<input type="text" class="form-control" id="Balance" name="Balance" value="{{ form.Balance }}" >
+					<input type="text" class="form-control" id="Balances" name="Balances" >
 					{% endif %}
 					</div>
 				</div>
@@ -301,7 +306,7 @@
 				    <label class="control-label col-sm-5"><b>Verification Date:</b></label>
 				    <div class="col-sm-10">
 				    {%if id %}
-					<input type="date" class="form-control" id="Verification_Date" name="Verification_Date" value="{{ mat.Verification_Date }}" >
+					<input type="text" class="form-control" id="Verification_Date" name="Verification_Date" value="{{ mat.Verification_Date }}" >
 					{% else %} 
 					<input type="date" class="form-control" id="Verification_Date" name="Verification_Date" value="{{ form.Verification_Date }}" >
 				    {% endif %} 

@@ -33,7 +33,13 @@ def display(request):
 def post_method(request):
     # import pdb; pdb.set_trace()
     material_name=MaterialsInventory.objects.all()
+    # results=MaterialsInventory.objects.all()
+    mydict={}
     
+    for data in material_name:
+        mydict[data.Material_Name] = data.Quantity;
+   
+    # import pdb;pdb.set_trace()
     if request.method == 'POST':
         form = MaterialForm(request.POST)
         
@@ -71,7 +77,7 @@ def post_method(request):
 
         
         
-        saverecord.Balance=request.POST.get('Balance')    
+        saverecord.Balance=request.POST.get('Balances')    
         print(saverecord.Balance)
         saverecord.Material_Name=request.POST.get('Material_Name')
         saverecord.Date=request.POST.get('Date')
@@ -84,7 +90,7 @@ def post_method(request):
         
     else:
         # form = MaterialForm.objects.all(),{"mat":form}
-        return render(request, 'home.html',{'mat_name':material_name})
+        return render(request, 'home.html',{'mat_name':material_name,'MaterialsInventory':mydict})
 
 # def materialsinventory(request):
 #     mat=MaterialsInventory.objects.all()
@@ -97,7 +103,7 @@ def select_material_name(request):
     for data in results:
         mydict[data.Material_Name] = data.Quantity;
     context={'MaterialsInventory':mydict,'mat_name':results}
-    return render(request, "home.html",context)
+    return render(request, "home.html",context,{'MaterialsInventory':mydict})
 
 
     # empty dict = []; 
