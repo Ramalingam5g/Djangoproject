@@ -33,9 +33,9 @@ class Material(models.Model):
     Number_Of_Issued=models.IntegerField(null=True,blank=True)
     Balance=models.IntegerField(null=True,blank=True)
     Material_Name=models.ForeignKey(MaterialsInventory,on_delete = models.CASCADE,related_name="display",null=True)
-    Date=models.DateField()
+    Date=models.DateField(blank=True, null=True)
     Document_Number=models.IntegerField(unique=True)
-    Verification_Date=models.DateField()
+    Verification_Date=models.DateField(blank=True, null=True)
     Verified_By=models.CharField(max_length=100)
 
     

@@ -111,97 +111,148 @@
 .contact-form button:focus{
 	box-shadow:none;
 }
-</style> 
+</style>
+ 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+<script type="text/javascript">
+					
+	$(function () {
+		
+		$("#getid").change(function () {
+			
+			if ($(this).val() == "Received From") {
+				$("#dv").show();
+			} else {
+				$("#dv").hide();
+			}
+		});
+	});
+	$(function () {
+		$("#getid").change(function () {
+			if ($(this).val() == "Issued To") {
+				
+				$("#issues").show();
+			} else {
+				$("#issues").hide();
+
+			
+			}
+		});
+	});
+	//end
+	function myFunction() {
+		
+		var material = '{{MaterialsInventory}}';
+		console.log(material)
+		var x =material.replace(/&#x27;/g, '"');
+		console.log(x)
+		var d = JSON.parse(x)
+		console.log(d)
+		var matname=document.getElementById("Material_Names").value;
+		console.log(matname)
+		var mat_quantity=d[matname]
+		console.log(typeof(mat_quantity))
+		var no_of_issued=document.getElementById("Number_Of_Issued").value;
+		var convert_int=parseInt(no_of_issued)
+		console.log(typeof(int))
+	
+		var no_of_received=document.getElementById("Number_Of_Received").value;
+		var convert_integer=parseInt(no_of_received)
+		console.log(typeof(ints))
+		if (no_of_issued != ""){
+			if (no_of_issued > mat_quantity){
+				alert("Material Quantity is "+ mat_quantity)
+				document.getElementById("Number_Of_Issued").value="";
+
+			}
+			else{
+			var balance=mat_quantity - convert_int
+			//alert(balance)
+			console.log(typeof(balance))
+			document.getElementById('Balances').value = balance;
+			}
+		}
+		else{
+			var balance1=mat_quantity + convert_integer
+			console.log(typeof(balance1))
+			// alert(balance1)
+			document.getElementById('Balances').value = balance1;
+		}
+
+	}
+	//end
+		
+	function doc_validation(){ 
+		var documents=document.getElementById("Document_Number").value;
+		var doc='{{doc_id}}'
+		if (documents == ""){
+			alert("message")
+		}
+
+		
+		if (doc.includes(documents)){
+			alert("Document Number Already Exist")
+			document.getElementById("Document_Number").value="";
+		}
+		
+		
+		
+		else if( !/^[0-9]+$/.test( documents ) ) {
+			alert('Input is only numeric');
+        }
+		else{
+			return true
+		}
+		
+	}
+	//end
+	function empty() {
+    var x = document.getElementById("Document_Number").value;
+	var y=document.getElementById("Transaction_Type").value;
+    if (x == " ") {
+        alert("Enter a Valid Roll Number");
+		document.getElementById("Document_Number").focus();
+        return false;
+		
+    };
+	
+	if (y == "--Select Transaction Type--") {
+        alert("Select Transaction Type Number");
+        return false;
+    };
+}
+	    
+
+	
+	
+	   
+	
+</script>
 
 
 <!------ Include the above in your HEAD tag ---------->
 <h2>Material Stock Updation</h2>
 	<div class="col-md-9">
 
-		<form  method="POST" class="post-form" action="">
+		<form  name= "RegForm" method="POST" class="post-form" action=""     >
 	        {% csrf_token %}
 			
-				<script type="text/javascript">
-					
-					$(function () {
-						alert("hello")
-						$("#getid").change(function () {
-							alert("RF")
-							if ($(this).val() == "Received From") {
-								$("#dv").show();
-							} else {
-								$("#dv").hide();
-							}
-						});
-					});
-					$(function () {
-						$("#getid").change(function () {
-							if ($(this).val() == "Issued To") {
-								alert("issued")
-								$("#issues").show();
-							} else {
-								$("#issues").hide();
-
-							
-							}
-						});
-					});
-					function myFunction() {
-						
-						var material = '{{MaterialsInventory}}';
-						console.log(material)
-						var x =material.replace(/&#x27;/g, '"');
-						console.log(x)
-						var d = JSON.parse(x)
-						console.log(d)
-						var matname=document.getElementById("Material_Names").value;
-						console.log(matname)
-						var mat_quantity=d[matname]
-						console.log(typeof(mat_quantity))
-						var no_of_issued=document.getElementById("Number_Of_Issued").value;
-						var convert_int=parseInt(no_of_issued)
-						console.log(typeof(int))
-		            
-						var no_of_received=document.getElementById("Number_Of_Received").value;
-						var convert_integer=parseInt(no_of_received)
-						console.log(typeof(ints))
-						if (no_of_issued!=""){
-							var balance=mat_quantity - convert_int
-							alert(balance)
-							console.log(typeof(balance))
-							document.getElementById('Balances').value = balance;
-						}
-						else{
-							var balance1=mat_quantity + convert_integer
-							console.log(typeof(balance1))
-							alert(balance1)
-							document.getElementById('Balances').value = balance1;
-						}
-					$('#Material_Names').on('change',function(){
-                        $('#Material_Names').html($(this).val());   
-                    });
-	 
-	  
-	                   }
-				</script>
-				 
+				
+			 
 				    <div class="form-group">
 					<label class="=control-label col-sm-5" ><b>Material Name:</b></label> 
-					<select id='Material_Names' >
-						{% if id %}
-						<input type="text" class="form-control" id=Material_Names" name="Material_Names" value="{{ mat.Material_Name }}" >
-						{% else %}
-						<option disabled='true' selected><b>--Select Material Name--</b></option>
+					<select id='Material_Names'  >
+						
+						<option disabled='true' name='Material_Name'   selected><b>--Select Material Name--</b></option>
 						{% for select in mat_name %}
 						<option>{{ select.Material_Name}}</option>
 						{% endfor %}
-						{% endif %} 
+						
 					</select>
 				    </div>
-					<!-- {{mat.Issue_To}} -->
+					
 				<div class="form-group">
 				<label class="=control-label col-sm-5" ><b>Transaction Type:</b></label>
 				<select id="getid" id="Transaction_Type" name="Transaction_Type" >
@@ -215,20 +266,6 @@
 				{% endif %} 
 				</div>
 
-			<!-- {% if mat.id %} -->
-				<h1>{{mat.Issue_To}}</h1>
-				{% if mat.Received_From != 'None' %}
-				<label class="=control-label col-sm-5" ><b>Received From:</b></label>
-				<input type="text" value="{{mat.Issue_To}}">  
-				<input type="text" value="{{mat.Received_From}}">
-				<label class="=control-label col-sm-5" ><b>No. Of Received:</b></label> 
-				<input type="text" value="{{mat.Number_Of_Received}}">
-				{% elif mat.Issue_To != 'None' %}
-				<input type="text" value="{{mat.Issue_To}}">
-				<input type="text" value="{{mat.Number_Of_Issued}}">
-				{% endif %}
-
-			<!-- {% else %} -->
 				<div>
 					<div id="issues" style="display: none">
 						<div class="form-group">
@@ -236,9 +273,9 @@
 							<div class="col-sm-10">
 							{% if id %}	
 							
-							<input type="text" class="form-control" id="Issue_To" name="Issue_To" placeholder="{{ mat.Issue_To }}"> -->
+							<input type="text" class="form-control" id="Issue_To" name="Issue_To" placeholder="{{ mat.Issue_To }}" > 
 							{% else %}
-							<input type="text" class="form-control" id="Issue_To" name="Issue_To" placeholder="{{ form.Issue_To }}">
+							<input type="text" class="form-control" id="Issue_To" name="Issue_To" placeholder="{{ form.Issue_To }}" >
 							{% endif %}
 							</div>
 						</div>
@@ -246,9 +283,9 @@
 							<label class="=control-label col-sm-5" ><b>Number Of Issued :</b></label> 
 							<div class="col-sm-10">
 							{% if id %}
-							<input type="text" class="form-control" id="Number_Of_Issued" name="Number_Of_Issued" placeholder="{{ mat.Number_Of_Issued }}">
+							<input type="text" class="form-control" id="Number_Of_Issued" name="Number_Of_Issued" placeholder="{{ mat.Number_Of_Issued }}" >
 							{% else %}
-							<input type="text" class="form-control" id="Number_Of_Issued" name="Number_Of_Issued" onchange="myFunction()" placeholder="{{ form.Number_Of_Issued }}">
+							<input type="text" class="form-control" id="Number_Of_Issued" name="Number_Of_Issued" onchange="myFunction()" placeholder="{{ form.Number_Of_Issued }}" >
 							{% endif %}
 							</div>
 						</div>	
@@ -258,9 +295,9 @@
 							<label class="=control-label col-sm-5" ><b>Received From:</b></label> 
 							<div class="col-sm-10">
 							{% if id %}	    
-							<input type="text" class="form-control" id="Received_From" name="Received_From" placeholder="{{ mat.Received_From }}">
+							<input type="text" class="form-control" id="Received_From" name="Received_From" placeholder="{{ mat.Received_From }}" >
 							{% else %}
-							<input type="text" class="form-control" id="Received_From" name="Received_From" placeholder="{{ form.Received_From }}">
+							<input type="text" class="form-control" id="Received_From" name="Received_From" onclick=" validationform()" placeholder="{{ form.Received_From }}" >
 							{% endif %}
 							</div>
 						</div>
@@ -268,15 +305,15 @@
 							<label class="=control-label col-sm-5" ><b>Number of Received:</b></label>
 							<div class="col-sm-10">
 							{%if id %}
-							<input type="text" class="form-control" id="Number_Of_Received" name="Number_Of_Received" placeholder="{{ mat.Number_Of_Received }}">
+							<input type="text" class="form-control" id="Number_Of_Received" name="Number_Of_Received" placeholder="{{ mat.Number_Of_Received }}" >
 							{% else %}
-							<input type="text" class="form-control" id="Number_Of_Received" name="Number_Of_Received" onchange="myFunction()" placeholder="{{ form.Number_Of_Received }}">
+							<input type="text" class="form-control" id="Number_Of_Received" name="Number_Of_Received" onchange="myFunction()" placeholder="{{ form.Number_Of_Received }}" >
 							{% endif%}
 							</div>
 						</div>
 					</div>
 				</div> 
-			<!-- {% endif  %} -->
+			
 
 
 
@@ -286,44 +323,21 @@
 					<label class="control-label col-sm-5" ><b>Balance:</b></label>
 					<div class="col-sm-10">
 					{% if id%}	
-					<input type="text" class="form-control" id="Balance" name="Balance" value="{{ mat.Balance }}" >
+					<input type="text" class="form-control" id="Balance" name="Balance" value="{{ mat.Balance }}" required>
 					{% else %}
-					<input type="text" class="form-control" id="Balances" name="Balances" >
+					<input type="text" class="form-control" id="Balances" name="Balances" required>
 					{% endif %}
 					</div>
 				</div>
 				
-				<!-- <label class="=control-label col-sm-5" ><b>Material Name:</b></label> {{ mat.id }}
-				<select id="Material_Name">
-					 
-					<option   name="Material_Name" selected><b>--Select Material Name--</b></option>
-					{% for select in mat_name %}
-					
-					<option>{{ select.Material_Name}}</option>
-					
-					{% endfor %}
-				</select>   -->
-				
-				<!-- the select material is:<b>{{MaterialsInventory}}</b> -->
-<!-- 				
-				<label class="=control-label col-sm-5" ><b>Qunatity:</b></label> {{ mat.id }}
-				<select> -->
-					 
-					<!-- <option  id="Material_Name" name="Material_Name" selected><b>--Select Material Name--</b></option> -->
-					<!-- {% for select in mat_name %}
-					{{ select.Quantity}}
-					<option value={{select.Material_Name}} id="Quantity" name="Quantity">{{ select.Quantity}}</option>
-					{{form.Material_Name}}
-					{% endfor %}
-				</select>   -->
 				
 				<div class="form-group">
 					<label class="=control-label col-sm-5" ><b>Date:</b></label>
 					<div class="col-sm-10">
 					{% if id %}
-					<input type="text" class="form-control" id="Date" name="Date" value="{{ mat.Date }}" >
+					<input type="text" class="form-control" id="Date" name="Date" value="{{ mat.Date }}" required >
 					{% else %}
-					<input type="date" class="form-control" id="Date" name="Date" value="{{ form.Date }}" >
+					<input type="date" class="form-control" id="Date" name="Date" value="{{ form.Date }}" required>
 					{% endif %}
 				  </div>
 				</div>
@@ -331,9 +345,9 @@
 					<label class="=control-label col-sm-5" ><b>Document_Number:</b></label>
 					<div class="col-sm-10">
 					{%if id %}
-					<input type="text" class="form-control" id= "Document_Number" name="Document_Number"  value=" {{ mat.Document_Number }}" >
+					<input type="text" class="form-control" id= "Document_Number" name="Document_Number"  value=" {{ mat.Document_Number }}" required >
 					{% else %}
-					<input type="text" class="form-control" id= "Document_Number" name="Document_Number"  value=" {{ form.Document_Number }}" >
+					<input type="text" class="form-control" id= "Document_Number"  name="Document_Number"  onchange="doc_validation()" value=" {{ form.Document_Number }}"  >
 				    {% endif %}
 				   </div>
 				</div>
@@ -341,9 +355,9 @@
 				    <label class="control-label col-sm-5"><b>Verification Date:</b></label>
 				    <div class="col-sm-10">
 				    {%if id %}
-					<input type="text" class="form-control" id="Verification_Date" name="Verification_Date" value="{{ mat.Verification_Date }}" >
+					<input type="text" class="form-control" id="Verification_Date" name="Verification_Date" value="{{ mat.Verification_Date }}" required>
 					{% else %} 
-					<input type="date" class="form-control" id="Verification_Date" name="Verification_Date" value="{{ form.Verification_Date }}" >
+					<input type="date" class="form-control" id="Verification_Date"  name="Verification_Date" value="{{ form.Verification_Date }}" required>
 				    {% endif %} 
 				    </div>
 				</div>
@@ -351,16 +365,16 @@
 					<label class="control-label col-sm-5" ><b>Verified by:</b></label>
 					<div class="col-sm-10">
                     {%if id%}
-					<input type="text" class="form-control" id="Verified_By" name="Verified_By" value="{{ mat.Verified_By }}" >
+					<input type="text" class="form-control" id="Verified_By" name="Verified_By" value="{{ mat.Verified_By }}" required>
 					{% else %}
-					<input type="text" class="form-control" id="Verified_By" name="Verified_By" value="{{ form.Verified_By }}" >
+					<input pattern='[A-Za-z\\s]*' type="text" class="form-control" id="Verified_By" name="Verified_By"  value="{{ form.Verified_By }}" required >
 					{% endif %}
 					</div>
 				  </div>
 				<div class="form-group">        
 				    <div class="col-sm-offset-2 col-sm-10">
 					<!-- <button type="submit" class="btn btn-default">Submit</button> -->
-					<input type="submit"  value="submit"/> 
+					<input type="submit" onclick="empty()" value="submit"/> 
 				    </div>
 				</div>
 			</div>

@@ -32,6 +32,8 @@ def display(request):
     # import pdb; pdb.set_trace()
 def post_method(request):
     # import pdb; pdb.set_trace()
+    doc_unique=Material.objects.values_list('Document_Number', flat=True)
+    doc_unique=list(doc_unique)
     material_name=MaterialsInventory.objects.all()
     # results=MaterialsInventory.objects.all()
     mydict={}
@@ -90,7 +92,7 @@ def post_method(request):
         
     else:
         # form = MaterialForm.objects.all(),{"mat":form}
-        return render(request, 'home.html',{'mat_name':material_name,'MaterialsInventory':mydict})
+        return render(request, 'home.html',{'mat_name':material_name,'MaterialsInventory':mydict,'doc_id':doc_unique})
 
 # def materialsinventory(request):
 #     mat=MaterialsInventory.objects.all()
@@ -124,7 +126,7 @@ def select_material_name(request):
 
 def update(request, id):
     
-	import pdb;pdb.set_trace()
+	# import pdb;pdb.set_trace()
 	material = Material.objects.get(id=id)
 	form = MaterialForm(instance=material)
 
