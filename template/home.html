@@ -1,13 +1,30 @@
 
-
+<!-- <h2 style="margin-left: 2%;margin-top: 4%; margin-bottom: -2%;"> Material Stock Updation</h2> -->
 <style>
 .form-design{
 	display: block;
-    width: 60%;
+	margin: 5px;
+    width: 70%;
     padding: .375rem .75rem;
     font-size: 1rem;
+	font-weight: 500;
     line-height: 1.5;
     color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.form-designS{
+	display: block;
+	
+    width: 78%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+	font-weight: 500;
+    line-height: 1.5;
+	color: #495057;
     background-color: #fff;
     background-clip: padding-box;
     border: 1px solid #ced4da;
@@ -20,7 +37,7 @@
 }
 
 .contact-info{
-	margin-top:10%;
+	margin-top:0%;
 }
 .contact-info img{
 	margin-bottom: 15%;
@@ -30,6 +47,7 @@
 }
 .col-md-9{
 	background: #fff;
+	margin: 40px;
 	padding: 3%;
 	border-top-right-radius: 0.5rem;
 	border-bottom-right-radius: 0.5rem;
@@ -92,14 +110,14 @@
 		
 		var material = '{{MaterialsInventory}}';
 		console.log(material)
-		var x =material.replace(/&#x27;/g, '"');
-		console.log(x)
-		var d = JSON.parse(x)
-		console.log(d)
+		var remove_reg_exp =material.replace(/&#x27;/g, '"');
+		console.log(remove_reg_exp)
+		var covert_dict = JSON.parse(remove_reg_exp)
+		console.log(covert_dict)
 		var matname=document.getElementById("Material_Names").value;
 		console.log(matname)
-		var mat_quantity=d[matname]
-		console.log(typeof(mat_quantity))
+		var selected_mat_quantity=covert_dict[matname]
+		console.log(typeof(selected_mat_quantity))
 		var no_of_issued=document.getElementById("Number_Of_Issued").value;
 		var convert_int=parseInt(no_of_issued)
 		console.log(typeof(int))
@@ -108,16 +126,16 @@
 		var convert_integer=parseInt(no_of_received)
 		console.log(typeof(ints))
 		if (no_of_issued != ""){
-			if (no_of_issued > mat_quantity){
-				alert("Requirement Is High...Material Quantity is "+ mat_quantity)
+			if (no_of_issued > selected_mat_quantity){
+				alert("Requirement Is High...Material Quantity is "+ selected_mat_quantity)
 				document.getElementById("Number_Of_Issued").value="";
 
 			}
 			else{
-			var balance=mat_quantity - convert_int
+			var issued_balance=selected_mat_quantity - convert_int
 			
-			console.log(typeof(balance))
-			document.getElementById('Balances').value = balance;
+			console.log(typeof(issued_balance))
+			document.getElementById('Balances').value = issued_balance;
 			if (matname == "selectnames"){
 				alert("Please Select A Material Name")
 				document.getElementById("Number_Of_Issued").value="";
@@ -130,10 +148,10 @@
 			}
 		}
 		else{
-			var balance1=mat_quantity + convert_integer
-			console.log(typeof(balance1))
+			var received_balance=selected_mat_quantity + convert_integer
+			console.log(typeof(received_balance))
 			
-			document.getElementById('Balances').value = balance1;
+			document.getElementById('Balances').value = received_balance;
 			if (matname == "selectnames"){
 				alert("Please Select A Material Name")
 				document.getElementById("Number_Of_Received").value="";
@@ -153,13 +171,13 @@
 		var doc='{{doc_id}}'
 		if (documents==null || documents==" "){
         	alert("Document Number can't be blank");
-			document.getElementById("Verified_By").value="";
+			// document.getElementById("Verified_By").value="";
             return false;
         } 
 		
 		if (doc.includes(documents)){
 			alert("Document Number Already Exist")
-			document.getElementById("Verified_By").value="";
+			// document.getElementById("Verified_By").value="";
 			return false
 		}
 		
@@ -180,47 +198,41 @@
 </script>
 
 
-
-<h2>Material Stock Updation</h2>
-	<div class="col-md-9">
+<h2 style="margin-left: 4%;margin-top: 4%; margin-bottom: -2%;"> Material Stock Updation</h2>
+	<div class="col-md-9" >
 
 		<form  name= "RegForm" method="POST" class="post-form" action=""    >
 	        {% csrf_token %}
-			
-				
-			 
-				    <div class="form-group">
-					<label class="=control-label col-sm-5" ><b>Material Name:</b></label> 
-					<select    id='Material_Names'   >
-						
-						<option disabled='true' name='Material_Name' value=selectnames  selected><b>--Select Material Name--</b></option>
-						{% for select in mat_name %}
-						<option>{{ select.Material_Name}}</option>
-						{% endfor %}
-						
-					</select>
-				    </div>
+			<div class="form-group">
+				<label class="=control-label col-sm-5" ><b>Material Name:</b></label> {{mat}}
+				<select    id='Material_Names'   >
 					
-				<div class="form-group">
-				<label class="=control-label col-sm-5" ><b>Transaction Type:</b></label>
-				<select id="getid" id="Transaction_Type" name="Transaction_Type" >
-				{% if id %}	
-				<option  id="Transaction_Type" name="Transaction_Type" value="{{mat.Transaction_Type}}" selected><b>{{mat.Transaction_Type}}</b></option>
-				{% else %}
-					<option disabled="true" id="Transaction_Type" name="Transaction_Type" selected><b>--Select Transaction Type--</b></option>
-					<option value="Received From">Received From </option>
-					<option value="Issued To">Issued To</option>
+					<option disabled='true' name='Material_Name' value=selectnames  selected><b>--Select Material Name--</b></option>
+					{% for select in mat_name %}
+					<option>{{ select.Material_Name}}</option>
+					{% endfor %}
+					
 				</select>
-				{% endif %} 
-				</div>
+			</div> 
+			        <div class="form-group">
+						<label class="=control-label col-sm-5" ><b>Transaction Type:</b></label>
+						<select id="getid" id="Transaction_Type" name="Transaction_Type" >
+						{% if id %}
+						<option  id="Transaction_Type" name="Transaction_Type" value="{{mat.Transaction_Type}}" selected><b>{{mat.Transaction_Type}}</b></option>
+						{% else %}
+						<option disabled="true" id="Transaction_Type" name="Transaction_Type" selected><b>--Select Transaction Type--</b></option>
+					    <option value="Received From">Received From </option>
+					    <option value="Issued To">Issued To</option>
+						{% endif %} 
+				        </select>
+					</div>
 				<div>
 					<div id="issues" style="display: none">
 						<div class="form-group">
 							<label class="=control-label col-sm-5" ><b>Issued To:</b></label>  
 							<div class="col-sm-10">
 							{% if id %}	
-							
-							<input type="text" class="form-design" id="Issue_To" name="Issue_To" placeholder="{{ mat.Issue_To }}" > 
+						    <input type="text" class="form-designS" id="Issue_To" name="Issue_To" placeholder="{{ mat.Issue_To }}" > 
 							{% else %}
 							<input type="text" class="form-control" id="Issue_To" name="Issue_To" placeholder="{{ form.Issue_To }}" >
 							{% endif %}
@@ -259,13 +271,7 @@
 							</div>
 						</div>
 					</div>
-				</div> 
-			
-
-
-
-
-		
+				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-5" ><b>Balance:</b></label>
 					<div class="col-sm-10">
@@ -294,7 +300,7 @@
 					{%if id %}
 					<input type="text" class="form-design" id= "Document_Number" name="Document_Number"  value=" {{ mat.Document_Number }}" required >
 					{% else %}
-					<input pattern='/^[a-zA-Z0-9]{6,}$/g' type="text" class="form-control" id= "Document_Number"  name="Document_Number"   value=" {{ form.Document_Number }}" >
+					<input  type="text" class="form-control" id= "Document_Number"  name="Document_Number"   value=" {{ form.Document_Number }}" >
 				    {% endif %}
 				   </div>
 				</div>
