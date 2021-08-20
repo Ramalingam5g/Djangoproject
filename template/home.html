@@ -1,84 +1,19 @@
-<!-- <html>
 
-<head>
-	<link
-	rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-	<style>
-		.i-am-centered {
-			margin: auto;
-			max-width: 300px;
-			padding-top: 20%;
-		}
-	</style>
-</head>
-
-<body>
-	<div class="i-am-centered">
-		<form method="POST">
-			{% csrf_token %}
-			<div class="form-group">
-				<label>Transaction type </label>
-				{{ form.transaction_type }}
-			</div>
-			<div class="form-group">
-				<label>Material Name </label>
-				{{ form.material_name }}
-			</div>
-			<div class="form-group">
-				<label>Date</label>
-				{{ form.date }}
-			</div>
-			<div class="form-group">
-				<label>Doc.no</label>
-				{{ form.doc_no }}
-			</div>
-            
-<script type="text/javascript">
-    function ShowHideDiv() {
-        var getid = document.getElementById("getid");
-        var issues = document.getElementById("issues");
-        issues.style.display = getid.value == "i" ? "block" : "none";
-        issues.style.display = getid.value == "r" ? "block" : "none";
-    }
-</script>
-<span>Transaction type</span>
-    <select id = "getid" onchange = "ShowHideDiv()">
-        <option value="r">Issued To</option>
-        <option value="i">issued to</option>            
-    </select>
-<hr />
-<div id="issues" style="display: none">
-    Issued To:
-    <input type="text" id="txtPassportNumber" />
-    
-</div>
-            
-           
-            <div class="form-group">
-				<label>issue</label>
-				{{ form.issue }}
-			</div>
-            <div class="form-group">
-				<label>balance</label>
-				{{ form.balance }}
-			</div>
-            <div class="form-group">
-				<label>verification date</label>
-				{{ form.verification_date }}
-			</div>
-            <div class="form-group">
-				<label>verified by</label>
-				{{ form.verified_by }}
-			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</form>
-	</div>
-</body>
-
-</html> -->
 
 <style>
+.form-design{
+	display: block;
+    width: 60%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
 .contact{
 	padding: 4%;
 	height: 400px;
@@ -111,6 +46,11 @@
 .contact-form button:focus{
 	box-shadow:none;
 }
+.city {
+  background-color: white;
+  color:black;
+  padding: 2px;
+}
 </style>
  
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -141,8 +81,14 @@
 			}
 		});
 	});
-	//end
+	
 	function myFunction() {
+		var rec = document.getElementById("Received_From").value;
+		var iss = document.getElementById("Issued_To");
+		if (iss != null){
+			var issd = iss.value
+		}
+
 		
 		var material = '{{MaterialsInventory}}';
 		console.log(material)
@@ -163,89 +109,91 @@
 		console.log(typeof(ints))
 		if (no_of_issued != ""){
 			if (no_of_issued > mat_quantity){
-				alert("Material Quantity is "+ mat_quantity)
+				alert("Requirement Is High...Material Quantity is "+ mat_quantity)
 				document.getElementById("Number_Of_Issued").value="";
 
 			}
 			else{
 			var balance=mat_quantity - convert_int
-			//alert(balance)
+			
 			console.log(typeof(balance))
 			document.getElementById('Balances').value = balance;
+			if (matname == "selectnames"){
+				alert("Please Select A Material Name")
+				document.getElementById("Number_Of_Issued").value="";
+			}
+			if (iss == null){
+				alert("Please Enter The Company Where Issued To")
+				
+			}
+			
 			}
 		}
 		else{
 			var balance1=mat_quantity + convert_integer
 			console.log(typeof(balance1))
-			// alert(balance1)
+			
 			document.getElementById('Balances').value = balance1;
+			if (matname == "selectnames"){
+				alert("Please Select A Material Name")
+				document.getElementById("Number_Of_Received").value="";
+			}
+			if (rec == ""){
+				alert("Please Fill Received From")
+				document.getElementById("Received_From").value="";
+			}
+			
 		}
 
 	}
-	//end
+	
 		
-	function doc_validation(){ 
+	function final_validation(){ 
 		var documents=document.getElementById("Document_Number").value;
 		var doc='{{doc_id}}'
-		if (documents == ""){
-			alert("message")
-		}
-
+		if (documents==null || documents==" "){
+        	alert("Document Number can't be blank");
+			document.getElementById("Verified_By").value="";
+            return false;
+        } 
 		
 		if (doc.includes(documents)){
 			alert("Document Number Already Exist")
-			document.getElementById("Document_Number").value="";
+			document.getElementById("Verified_By").value="";
+			return false
 		}
 		
-		
-		
-		else if( !/^[0-9]+$/.test( documents ) ) {
-			alert('Input is only numeric');
-        }
-		else{
-			return true
-		}
 		
 	}
-	//end
-	function empty() {
-    var x = document.getElementById("Document_Number").value;
-	var y=document.getElementById("Transaction_Type").value;
-    if (x == " ") {
-        alert("Enter a Valid Roll Number");
-		document.getElementById("Document_Number").focus();
-        return false;
-		
-    };
 	
-	if (y == "--Select Transaction Type--") {
-        alert("Select Transaction Type Number");
-        return false;
-    };
-}
-	    
+	function empty() {
+
+		{
+			
+			alert("Are You Sure...To Submit The Form")
+
+		}
+	}
 
 	
-	
-	   
 	
 </script>
 
 
-<!------ Include the above in your HEAD tag ---------->
+
 <h2>Material Stock Updation</h2>
 	<div class="col-md-9">
 
-		<form  name= "RegForm" method="POST" class="post-form" action=""     >
+		<form  name= "RegForm" method="POST" class="post-form" action=""    >
 	        {% csrf_token %}
 			
 				
 			 
 				    <div class="form-group">
 					<label class="=control-label col-sm-5" ><b>Material Name:</b></label> 
-					<select id='Material_Names'  >
+					<select    id='Material_Names'   >
 						
-						<option disabled='true' name='Material_Name'   selected><b>--Select Material Name--</b></option>
+						<option disabled='true' name='Material_Name' value=selectnames  selected><b>--Select Material Name--</b></option>
 						{% for select in mat_name %}
 						<option>{{ select.Material_Name}}</option>
 						{% endfor %}
@@ -265,7 +213,6 @@
 				</select>
 				{% endif %} 
 				</div>
-
 				<div>
 					<div id="issues" style="display: none">
 						<div class="form-group">
@@ -273,7 +220,7 @@
 							<div class="col-sm-10">
 							{% if id %}	
 							
-							<input type="text" class="form-control" id="Issue_To" name="Issue_To" placeholder="{{ mat.Issue_To }}" > 
+							<input type="text" class="form-design" id="Issue_To" name="Issue_To" placeholder="{{ mat.Issue_To }}" > 
 							{% else %}
 							<input type="text" class="form-control" id="Issue_To" name="Issue_To" placeholder="{{ form.Issue_To }}" >
 							{% endif %}
@@ -283,7 +230,7 @@
 							<label class="=control-label col-sm-5" ><b>Number Of Issued :</b></label> 
 							<div class="col-sm-10">
 							{% if id %}
-							<input type="text" class="form-control" id="Number_Of_Issued" name="Number_Of_Issued" placeholder="{{ mat.Number_Of_Issued }}" >
+							<input type="text" class="form-design" id="Number_Of_Issued" name="Number_Of_Issued" placeholder="{{ mat.Number_Of_Issued }}" >
 							{% else %}
 							<input type="text" class="form-control" id="Number_Of_Issued" name="Number_Of_Issued" onchange="myFunction()" placeholder="{{ form.Number_Of_Issued }}" >
 							{% endif %}
@@ -295,9 +242,9 @@
 							<label class="=control-label col-sm-5" ><b>Received From:</b></label> 
 							<div class="col-sm-10">
 							{% if id %}	    
-							<input type="text" class="form-control" id="Received_From" name="Received_From" placeholder="{{ mat.Received_From }}" >
+							<input type="text" class="form-design" id="Received_From" name="Received_From" placeholder="{{ mat.Received_From }}" >
 							{% else %}
-							<input type="text" class="form-control" id="Received_From" name="Received_From" onclick=" validationform()" placeholder="{{ form.Received_From }}" >
+							<input type="text" class="form-control" id="Received_From" name="Received_From" onchange=" validationform()" placeholder="{{ form.Received_From }}">
 							{% endif %}
 							</div>
 						</div>
@@ -305,7 +252,7 @@
 							<label class="=control-label col-sm-5" ><b>Number of Received:</b></label>
 							<div class="col-sm-10">
 							{%if id %}
-							<input type="text" class="form-control" id="Number_Of_Received" name="Number_Of_Received" placeholder="{{ mat.Number_Of_Received }}" >
+							<input type="text" class="form-design" id="Number_Of_Received" name="Number_Of_Received" placeholder="{{ mat.Number_Of_Received }}" >
 							{% else %}
 							<input type="text" class="form-control" id="Number_Of_Received" name="Number_Of_Received" onchange="myFunction()" placeholder="{{ form.Number_Of_Received }}" >
 							{% endif%}
@@ -323,7 +270,7 @@
 					<label class="control-label col-sm-5" ><b>Balance:</b></label>
 					<div class="col-sm-10">
 					{% if id%}	
-					<input type="text" class="form-control" id="Balance" name="Balance" value="{{ mat.Balance }}" required>
+					<input type="text" class="form-design" id="Balance" name="Balance" value="{{ mat.Balance }}" required>
 					{% else %}
 					<input type="text" class="form-control" id="Balances" name="Balances" required>
 					{% endif %}
@@ -335,7 +282,7 @@
 					<label class="=control-label col-sm-5" ><b>Date:</b></label>
 					<div class="col-sm-10">
 					{% if id %}
-					<input type="text" class="form-control" id="Date" name="Date" value="{{ mat.Date }}" required >
+					<input type="text" class="form-design" id="Date" name="Date" value="{{ mat.Date }}" required >
 					{% else %}
 					<input type="date" class="form-control" id="Date" name="Date" value="{{ form.Date }}" required>
 					{% endif %}
@@ -345,9 +292,9 @@
 					<label class="=control-label col-sm-5" ><b>Document_Number:</b></label>
 					<div class="col-sm-10">
 					{%if id %}
-					<input type="text" class="form-control" id= "Document_Number" name="Document_Number"  value=" {{ mat.Document_Number }}" required >
+					<input type="text" class="form-design" id= "Document_Number" name="Document_Number"  value=" {{ mat.Document_Number }}" required >
 					{% else %}
-					<input type="text" class="form-control" id= "Document_Number"  name="Document_Number"  onchange="doc_validation()" value=" {{ form.Document_Number }}"  >
+					<input pattern='/^[a-zA-Z0-9]{6,}$/g' type="text" class="form-control" id= "Document_Number"  name="Document_Number"   value=" {{ form.Document_Number }}" >
 				    {% endif %}
 				   </div>
 				</div>
@@ -355,7 +302,7 @@
 				    <label class="control-label col-sm-5"><b>Verification Date:</b></label>
 				    <div class="col-sm-10">
 				    {%if id %}
-					<input type="text" class="form-control" id="Verification_Date" name="Verification_Date" value="{{ mat.Verification_Date }}" required>
+					<input type="text" class="form-design" id="Verification_Date" name="Verification_Date" value="{{ mat.Verification_Date }}" required>
 					{% else %} 
 					<input type="date" class="form-control" id="Verification_Date"  name="Verification_Date" value="{{ form.Verification_Date }}" required>
 				    {% endif %} 
@@ -365,9 +312,9 @@
 					<label class="control-label col-sm-5" ><b>Verified by:</b></label>
 					<div class="col-sm-10">
                     {%if id%}
-					<input type="text" class="form-control" id="Verified_By" name="Verified_By" value="{{ mat.Verified_By }}" required>
+					<input type="text" class="form-design" id="Verified_By" name="Verified_By" value="{{ mat.Verified_By }}" required>
 					{% else %}
-					<input pattern='[A-Za-z\\s]*' type="text" class="form-control" id="Verified_By" name="Verified_By"  value="{{ form.Verified_By }}" required >
+					<input pattern='[A-Za-z\\s]*' type="text" class="form-control" id="Verified_By" name="Verified_By" onchange="final_validation()" value="{{ form.Verified_By }}" required >
 					{% endif %}
 					</div>
 				  </div>

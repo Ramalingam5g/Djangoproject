@@ -1,40 +1,29 @@
-
-<head>  
-    <meta charset="UTF-8">  
-    <title>Material Records</title>  
-     {% load static %}
-     
-     
-        <style>
-        /* body{
-          background-color:rgb(181, 199, 231);
-        } */
-        input{
-          border: 1px solid black;
-          height: 20px;
-        }
-        label{
-          font-size: 30px;
-        }
-        table {
-          font-family: arial, sans-serif;
-          border-collapse: collapse;
-          width: 100%;
-        }
+<style>
         
-        td, th {
-          border: 1px solid #000000;
-          text-align: left;
-          padding: 5px;
-        }
-        
-        tr:nth-child() {
-          background-color: #dddddd;
-        }
-        
-        </style>
-        
-     
+  input{
+    border: 1px solid black;
+    height: 20px;
+  }
+  label{
+    font-size: 30px;
+  }
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #000000;
+    text-align: left;
+    padding: 5px;
+  }
+  
+  tr:nth-child() {
+    background-color: #dddddd;
+  }
+  
+  </style>
 </head>  
 <body>  
 <table class="table table-striped table-bordered table-sm" data-show-toggle="false">
@@ -42,34 +31,28 @@
     
     <thead class="thead-dark">  
     <tr>
-        <th display="none">ID </th>  
         <th> Date </th>
         <th> Document Number </th>
         <th> Balance</th>
         <th> Verification Date</th>
-        <th> Action </th>
+        <th> Action </th> 
     </tr>  
     </thead>  
     <tbody>
   {% for form_material in materials %}  
   
     <tr>  
-      
-        <td> {{form_material.id }}</td>
         <td> {{form_material.Date}} </td>
         <td> {{form_material.Document_Number}}</td>
         <td> {{ form_material.Balance}}</td>
-        <td> {{ form_material.Verification_Date }} <td>
-        <td>
-          <a href="/update/{{form_material.id}}"><span class="glyphicon glyphicon-pencil" >Update</span></a>  
-          <a href="/delete/{{ form_material.id }}">Delete</a>  
-        </td>
+        <td> {{ form_material.Verification_Date }} </td>
+        <td><a href="/update/{{form_material.id}}"><span class="glyphicon glyphicon-pencil" >Update</span></a>  
+       
     </tr>  
 {% endfor %}  
     </tbody>  
 </table>  
-<br>  
-<br>  
+
 <center><a href="/post_method" class="btn btn-primary">Add New Record</a></center>  
 </body>  
 </html>  
