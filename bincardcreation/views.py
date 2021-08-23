@@ -28,7 +28,7 @@ def Create_Method(request):
     for data in material_name:
         mydict[data.Material_Name] = data.Quantity;
    
-    # import pdb;pdb.set_trace()
+    import pdb;pdb.set_trace()
     if request.method == 'POST':
         form = MaterialForm(request.POST)
         
@@ -91,3 +91,25 @@ def update(request, id):
 	print("------",material)    
 	return render(request, 'home.html', context)
 
+
+
+
+
+
+
+
+
+
+
+
+
+# doc_unique=Material.objects.values_list('Document_Number', flat=True)
+#     doc_unique=list(doc_unique)
+#     material_name=MaterialsInventory.objects.all()
+#     # results=MaterialsInventory.objects.all()
+#     mydict={}
+#     materliallist = []
+#     material_name_list = MaterialsInventory.objects.all()
+#     for matname in material_name_list:
+#         materliallist.append(matname.Material_Name)
+#         print(materliallist)

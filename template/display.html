@@ -36,13 +36,32 @@ tr:nth-child(even) {
   margin: 1px 1px;
   cursor: pointer;
 } 
+.container{
+  text-align: right;
+  top: 15px;
+  bottom: 15px;
+}
+.class{
+  height: 32px;
+  margin: 1px; 
+  width: 68px;
+}
 </style>
 </head>  
 <body>  
 <table style="width:100%">
 <h1><center> Material Inward Ledger</center></h1>
+<div class="container" >
+  
+    <button class="class" onclick="location.href='Create_Method'" type="button">Create</button>
+    <!-- <button> <a href="/Create_Method" type="button" class="button">Add New Record</a></button></center> -->
+   <!-- <button><a>class='btn btn-primary pull-right'> href="/Create_Method" type="button" class="button">Add New Record</a></button> -->
+   <button class="class"> Cancel</button>
+ </h1>
+</div>
     
-    <thead class="thead-dark">  
+    <thead class="thead-dark">
+        
     <tr>
         <th> Date </th>
         <th> Document Number </th>
@@ -65,7 +84,9 @@ tr:nth-child(even) {
 {% endfor %}  
     </tbody>  
 </table>  
-<center style="margin: 25px;"><button> <a href="/Create_Method" type="button" class="button">Add New Record</a></button></center>
+
+
+<!-- <center style="margin: 25px;"><button> <a href="/Create_Method" type="button" class="button">Add New Record</a></button></center> -->
 <!-- <center><a href="/post_method"  type="button" class="btn btn-primary">Add New Record</a></center>   -->
 </body>  
 </html>  

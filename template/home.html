@@ -123,6 +123,7 @@
 		console.log(typeof(int))
 	
 		var no_of_received=document.getElementById("Number_Of_Received").value;
+		
 		var convert_integer=parseInt(no_of_received)
 		console.log(typeof(ints))
 		if (no_of_issued != ""){
@@ -168,6 +169,9 @@
 		
 	function final_validation(){ 
 		var documents=document.getElementById("Document_Number").value;
+		var selected_material_name=document.getElementById("Material_Names").value;
+		document.getElementById('Material_Names').value = selected_material_name;
+
 		var doc='{{doc_id}}'
 		if (documents==null || documents==" "){
         	alert("Document Number can't be blank");
@@ -201,13 +205,14 @@
 <h2 style="margin-left: 4%;margin-top: 4%; margin-bottom: -2%;"> Material Stock Updation</h2>
 	<div class="col-md-9" >
 
+		
 		<form  name= "RegForm" method="POST" class="post-form" action=""    >
 	        {% csrf_token %}
 			<div class="form-group">
-				<label class="=control-label col-sm-5" ><b>Material Name:</b></label> {{mat}}
+				<label class="=control-label col-sm-5" ><b>Material Name:</b></label> 
 				<select    id='Material_Names'   >
 					
-					<option disabled='true' name='Material_Name' value=selectnames  selected><b>--Select Material Name--</b></option>
+					<option disabled='true' name='Material_Names' id='Material_Names' value=selectnames  selected><b>--Select Material Name--</b></option>
 					{% for select in mat_name %}
 					<option>{{ select.Material_Name}}</option>
 					{% endfor %}
@@ -226,6 +231,31 @@
 						{% endif %} 
 				        </select>
 					</div>
+					{% if mat.Transaction_Type == 'Issued To' %}
+						<div class="form-group">
+							{% if id %}
+							<label class="=control-label col-sm-5" ><b>Issued To:</b></label>  
+							<div class="col-sm-10">
+								<input type="text" class="form-design" value="{{mat.Issue_To}}">
+								<label class="=control-label col-sm-5" ><b>Number Of Issued :</b></label> 
+								<input type="text" class="form-design" value="{{mat.Number_Of_Issued}}">
+							</div>
+							{%  endif %}
+						</div>
+					{% else %}
+
+
+						<div class="form-group">
+							{% if id %}
+							<label class="=control-label col-sm-5" ><b>Received From:</b></label>  
+							<div class="col-sm-10">
+								<input type="text" class="form-design" value="{{mat.Received_From}}">
+								<label class="=control-label col-sm-5" ><b>Number_Of_Received :</b></label> 
+								<input type="text" class="form-design" value="{{mat.Number_Of_Received}}">
+							</div>
+							{%  endif %}
+						</div>
+				{% endif %}
 				<div>
 					<div id="issues" style="display: none">
 						<div class="form-group">
