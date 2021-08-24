@@ -19,14 +19,14 @@ class MaterialsInventory(models.Model):
     #     return self.Material_Name
 
 
-Trans_type=(
-    ('Received From','Recieved From'),
-    ("Issued To","Issued To"),
-)
+# Trans_type=(
+#     ('Received From','Recieved From'),
+#     ("Issued To","Issued To"),
+# )
 
 class Material(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    Transaction_Type=models.CharField(max_length=20,choices=Trans_type,default='Received From',null=True)
+    Transaction_Type=models.CharField(max_length=20,null=True)
     Received_From=models.CharField(max_length=200,null=True,blank=True)
     Number_Of_Received=models.IntegerField(null=True,blank=True)
     Issue_To=models.CharField(max_length=200,null=True,blank=True)

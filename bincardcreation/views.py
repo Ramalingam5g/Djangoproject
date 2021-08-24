@@ -8,6 +8,7 @@ from rest_framework import status
 from django.contrib import messages
 from bincardcreation.forms import MaterialForm
 from .serializers import *
+import uuid
 
 from datetime import datetime
 from django.http import JsonResponse
@@ -28,7 +29,7 @@ def Create_Method(request):
     for data in material_name:
         mydict[data.Material_Name] = data.Quantity;
    
-    import pdb;pdb.set_trace()
+    # import pdb;pdb.set_trace()
     if request.method == 'POST':
         form = MaterialForm(request.POST)
         
@@ -61,6 +62,7 @@ def Create_Method(request):
         saverecord.Balance=request.POST.get('Balances')    
         print(saverecord.Balance)
         saverecord.Material_Name=request.POST.get('Material_Name')
+        print(saverecord.Material_Name)
         saverecord.Date=request.POST.get('Date')
         saverecord.Document_Number=request.POST.get('Document_Number')
         saverecord.Verification_Date=request.POST.get('Verification_Date')
@@ -71,8 +73,10 @@ def Create_Method(request):
         
     else:
         # form = MaterialForm.objects.all(),{"mat":form}
-        return render(request, 'home.html',{'mat_name':material_name,'MaterialsInventory':mydict,'doc_id':doc_unique})
+        print(material_name)
 
+        return render(request, 'home.html',{'mat_name':material_name,'MaterialsInventory':mydict,'doc_id':doc_unique})
+        
 
 
 def update(request, id):
@@ -92,7 +96,17 @@ def update(request, id):
 	return render(request, 'home.html', context)
 
 
-
+def add_materail_view(request,id):
+    category = MaterialsInventory.objects.filter(pk=id)
+    print(category)
+    # for report in category:
+    #     print('ID:{} Material_Name :{}'.format(report.Material_Name_id.uuid , report.Material_Name_id.Material_Name))
+    # form = MaterialForm(request.POST or None, initial={'category':category.Material_Name,})
+    # if form.is_valid():
+    #     instance = form.save(commit=False)
+    #     instance.save()
+    # return render(request,'material.html',{'form': form ,'for_debug':category})
+    return render(request, 'home.html')
 
 
 

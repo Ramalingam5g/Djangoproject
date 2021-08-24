@@ -110,21 +110,22 @@
 		
 		var material = '{{MaterialsInventory}}';
 		console.log(material)
-		var remove_reg_exp =material.replace(/&#x27;/g, '"');
+		var remove_reg_exp = material.replace(/&#x27;/g, '"');
 		console.log(remove_reg_exp)
 		var covert_dict = JSON.parse(remove_reg_exp)
 		console.log(covert_dict)
-		var matname=document.getElementById("Material_Names").value;
+		var matname = document.getElementById("Material_Names").value;
+		
 		console.log(matname)
-		var selected_mat_quantity=covert_dict[matname]
+		var selected_mat_quantity = covert_dict[matname]
 		console.log(typeof(selected_mat_quantity))
-		var no_of_issued=document.getElementById("Number_Of_Issued").value;
-		var convert_int=parseInt(no_of_issued)
+		var no_of_issued = document.getElementById("Number_Of_Issued").value;
+		var convert_int = parseInt(no_of_issued)
 		console.log(typeof(int))
 	
-		var no_of_received=document.getElementById("Number_Of_Received").value;
+		var no_of_received = document.getElementById("Number_Of_Received").value;
 		
-		var convert_integer=parseInt(no_of_received)
+		var convert_integer = parseInt(no_of_received)
 		console.log(typeof(ints))
 		if (no_of_issued != ""){
 			if (no_of_issued > selected_mat_quantity){
@@ -133,7 +134,7 @@
 
 			}
 			else{
-			var issued_balance=selected_mat_quantity - convert_int
+			var issued_balance = selected_mat_quantity - convert_int
 			
 			console.log(typeof(issued_balance))
 			document.getElementById('Balances').value = issued_balance;
@@ -149,7 +150,7 @@
 			}
 		}
 		else{
-			var received_balance=selected_mat_quantity + convert_integer
+			var received_balance = selected_mat_quantity + convert_integer
 			console.log(typeof(received_balance))
 			
 			document.getElementById('Balances').value = received_balance;
@@ -167,10 +168,10 @@
 	}
 	
 		
-	function final_validation(){ 
-		var documents=document.getElementById("Document_Number").value;
-		var selected_material_name=document.getElementById("Material_Names").value;
-		document.getElementById('Material_Names').value = selected_material_name;
+	function validation(){ 
+		var documents = document.getElementById("Document_Number").value;
+		
+		
 
 		var doc='{{doc_id}}'
 		if (documents==null || documents==" "){
@@ -188,14 +189,48 @@
 		
 	}
 	
-	function empty() {
 
-		{
-			
-			alert("Are You Sure...To Submit The Form")
 
-		}
-	}
+
+	
+    
+
+	
+		
+		// var materialName = document.getElementById("Material_Names").value;
+		// var Transactiontype = document.getElementById("Transaction_Type").value;
+		// var Issued = document.getElementById("Issue_To").value;
+		// var no_of_issued =document.getElementById("Number_Of_Issued").value;
+		// var Received =document.getElementById("Received_From").value;
+		// var no_of_received =document.getElementById("Number_Of_Received").value;
+		// var Balance = document.getElementById("Balances").value;
+		// var Date = document.getElementById("Date").value;
+		// var Document_Number = document.getElementById("Document_Number").value;	
+		// var Verification_Date = document.getElementById("Verification_Date").value;
+		// var Verified_By = document.getElementById("Verified_By").value;
+
+
+		$("#RegForm").submit(function(event) {
+        var $form = $(this),
+        $inputs = $form.find("input, select, button, textarea"),
+        serializedData = $form.serialize();
+
+        $.ajax({
+            url: "/Create_Method/",
+            type: "post",
+            data: serializeData,
+            success: function(response) {
+                alert(response)
+            }
+        })
+        event.preventDefault();
+    });
+
+
+      
+
+    
+
 
 	
 	
@@ -209,16 +244,19 @@
 		<form  name= "RegForm" method="POST" class="post-form" action=""    >
 	        {% csrf_token %}
 			<div class="form-group">
-				<label class="=control-label col-sm-5" ><b>Material Name:</b></label> 
-				<select    id='Material_Names'   >
-					
+				<label class="=control-label col-sm-5" ><b>Material Name:</b></label>
+				<select    id='Material_Names'    >
+					{% if id %}
+					<option  id="Material_Names" name="Material_Names" id ='selected_mat_name' value="{{mat.Material_Name}}" selected><b>{{mat.Material_Name}}</b></option>
+					{% else %}
 					<option disabled='true' name='Material_Names' id='Material_Names' value=selectnames  selected><b>--Select Material Name--</b></option>
-					{% for select in mat_name %}
-					<option>{{ select.Material_Name}}</option>
+					{% for select in mat_name %}  
+					<option value="{{ select.Material_Name}}">{{ select.Material_Name}}</option>  
 					{% endfor %}
-					
+					{% endif %}
 				</select>
 			</div> 
+			
 			        <div class="form-group">
 						<label class="=control-label col-sm-5" ><b>Transaction Type:</b></label>
 						<select id="getid" id="Transaction_Type" name="Transaction_Type" >
@@ -286,7 +324,7 @@
 							{% if id %}	    
 							<input type="text" class="form-design" id="Received_From" name="Received_From" placeholder="{{ mat.Received_From }}" >
 							{% else %}
-							<input type="text" class="form-control" id="Received_From" name="Received_From" onchange=" validationform()" placeholder="{{ form.Received_From }}">
+							<input type="text" class="form-control" id="Received_From" name="Received_From"  placeholder="{{ form.Received_From }}">
 							{% endif %}
 							</div>
 						</div>
@@ -350,14 +388,14 @@
                     {%if id%}
 					<input type="text" class="form-design" id="Verified_By" name="Verified_By" value="{{ mat.Verified_By }}" required>
 					{% else %}
-					<input pattern='[A-Za-z\\s]*' type="text" class="form-control" id="Verified_By" name="Verified_By" onchange="final_validation()" value="{{ form.Verified_By }}" required >
+					<input pattern='[A-Za-z\\s]*' type="text" class="form-control" id="Verified_By" name="Verified_By" onchange="validation()" value="{{ form.Verified_By }}" required >
 					{% endif %}
 					</div>
 				  </div>
 				<div class="form-group">        
 				    <div class="col-sm-offset-2 col-sm-10">
 					<!-- <button type="submit" class="btn btn-default">Submit</button> -->
-					<input type="submit" onclick="empty()" value="submit"/> 
+					<input type="submit" id="savedata" onclick="Savedata()" value="submit"/> 
 				    </div>
 				</div>
 			</div>

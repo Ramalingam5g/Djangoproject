@@ -29,7 +29,9 @@ urlpatterns = [
     # path('edit/<str:id>', views.edit,name="edit"),  
     path('update/<str:id>', views.update),  
     # path('delete/<str:id>', views.delete), 
-    # path('mat/',views.materialsinventory),
+    path('mat/',views.add_materail_view),
+    # path (r'^add/(?P<category_id>[0-9]+)', "core.views.add_materail_view", name='add_materail_view'),
 ]
+
 
 
