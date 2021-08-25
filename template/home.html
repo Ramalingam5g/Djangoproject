@@ -193,21 +193,25 @@
 
 
 	
-    
+    function Savedata(){
 
 	
 		
-		// var materialName = document.getElementById("Material_Names").value;
-		// var Transactiontype = document.getElementById("Transaction_Type").value;
-		// var Issued = document.getElementById("Issue_To").value;
-		// var no_of_issued =document.getElementById("Number_Of_Issued").value;
-		// var Received =document.getElementById("Received_From").value;
-		// var no_of_received =document.getElementById("Number_Of_Received").value;
-		// var Balance = document.getElementById("Balances").value;
-		// var Date = document.getElementById("Date").value;
-		// var Document_Number = document.getElementById("Document_Number").value;	
-		// var Verification_Date = document.getElementById("Verification_Date").value;
-		// var Verified_By = document.getElementById("Verified_By").value;
+		var materialName = document.getElementById("Material_Names").value;
+		console.log(materialName)
+		
+		document.getElementById('selected_mat_name').value = matr ;
+		
+		var Transactiontype = document.getElementById("Transaction_Type").value;
+		var Issued = document.getElementById("Issue_To").value;
+		var no_of_issued =document.getElementById("Number_Of_Issued").value;
+		var Received =document.getElementById("Received_From").value;
+		var no_of_received =document.getElementById("Number_Of_Received").value;
+		var Balance = document.getElementById("Balances").value;
+		var Date = document.getElementById("Date").value;
+		var Document_Number = document.getElementById("Document_Number").value;	
+		var Verification_Date = document.getElementById("Verification_Date").value;
+		var Verified_By = document.getElementById("Verified_By").value;
 
 
 		$("#RegForm").submit(function(event) {
@@ -228,7 +232,7 @@
 
 
       
-
+	}
     
 
 
@@ -247,7 +251,7 @@
 				<label class="=control-label col-sm-5" ><b>Material Name:</b></label>
 				<select    id='Material_Names'    >
 					{% if id %}
-					<option  id="Material_Names" name="Material_Names" id ='selected_mat_name' value="{{mat.Material_Name}}" selected><b>{{mat.Material_Name}}</b></option>
+					<option  id="Material_Names" name="selected_mat_name" id ='selected_mat_name' value="{{mat.Material_Name}}" selected><b>{{mat.Material_Name}}</b></option>
 					{% else %}
 					<option disabled='true' name='Material_Names' id='Material_Names' value=selectnames  selected><b>--Select Material Name--</b></option>
 					{% for select in mat_name %}  

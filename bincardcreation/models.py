@@ -14,15 +14,7 @@ class MaterialsInventory(models.Model):
 
     class Meta:
         db_table="bincardcreation_materialsinventory"
-    
-    # def __str__(self):
-    #     return self.Material_Name
-
-
-# Trans_type=(
-#     ('Received From','Recieved From'),
-#     ("Issued To","Issued To"),
-# )
+ 
 
 class Material(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

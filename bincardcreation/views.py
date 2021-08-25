@@ -37,7 +37,7 @@ def Create_Method(request):
         
         saverecord=Material()
         saverecord.Transaction_Type=request.POST.get('Transaction_Type')
-        print(saverecord.Transaction_Type)
+        print("Transaction_Type",saverecord.Transaction_Type)
         
         if request.POST.get('Received_From') == '':
             saverecord.Received_From = None
@@ -60,11 +60,13 @@ def Create_Method(request):
             no_of_issued = request.POST.get("Number_Of_Issued")
             saverecord.Number_Of_Issued= int(no_of_issued)
         saverecord.Balance=request.POST.get('Balances')    
-        print(saverecord.Balance)
-        saverecord.Material_Name=request.POST.get('Material_Name')
-        print(saverecord.Material_Name)
+        print("Balances",saverecord.Balance)
+        saverecord.Material_Name_id=request.POST.get("MaterialsInventory_id")
+        print("Material_Names",saverecord.Material_Name_id)
         saverecord.Date=request.POST.get('Date')
+        print("Date",saverecord.Date)
         saverecord.Document_Number=request.POST.get('Document_Number')
+        print("Document_Number",saverecord.Document_Number)
         saverecord.Verification_Date=request.POST.get('Verification_Date')
         saverecord.Verified_By=request.POST.get('Verified_By')
         saverecord.save()
@@ -73,7 +75,7 @@ def Create_Method(request):
         
     else:
         # form = MaterialForm.objects.all(),{"mat":form}
-        print(material_name)
+        # print(material_name)
 
         return render(request, 'home.html',{'mat_name':material_name,'MaterialsInventory':mydict,'doc_id':doc_unique})
         
