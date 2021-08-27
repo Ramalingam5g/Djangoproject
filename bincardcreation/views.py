@@ -29,10 +29,19 @@ def Create_Method(request):
     for data in material_name:
         mydict[data.Material_Name] = data.Quantity;
    
-    # import pdb;pdb.set_trace()
+   
     if request.method == 'POST':
+        # import pdb;pdb.set_trace()
         form = MaterialForm(request.POST)
-        
+        # selected_material_name = MaterialsInventory.objects.filter(Material_Name = request.POST.get("Material_Names"))
+        get_selected_material_id = MaterialsInventory.objects.filter(Material_Name = request.POST.get("Material_Names")).values_list('id', flat=True).first()
+        print(get_selected_material_id)
+     
+        # get_id = MaterialsInventory.objects.values_list('id', 'Material_Name')
+        # print(get_id)
+ 
+        # selected_material_name.save()
+        # selected_material_name.id
         
         
         saverecord=Material()
@@ -61,7 +70,8 @@ def Create_Method(request):
             saverecord.Number_Of_Issued= int(no_of_issued)
         saverecord.Balance=request.POST.get('Balances')    
         print("Balances",saverecord.Balance)
-        saverecord.Material_Name_id=request.POST.get("MaterialsInventory_id")
+
+        saverecord.Material_Name_id = get_selected_material_id
         print("Material_Names",saverecord.Material_Name_id)
         saverecord.Date=request.POST.get('Date')
         print("Date",saverecord.Date)
@@ -83,19 +93,63 @@ def Create_Method(request):
 
 def update(request, id):
     
-	# import pdb;pdb.set_trace()
-	material = Material.objects.get(id=id)
-	form = MaterialForm(instance=material)
+    # import pdb;pdb.set_trace()
+    material = Material.objects.get(id=id)
+    form = MaterialForm(instance=material)
+    material_id= Material.objects.filter(id=id)[0].Material_Name_id
+    print(material_id)
+    selected_material_id = MaterialsInventory.objects.filter(id = material_id )[0].Material_Name    
+    
+    print(selected_material_id)
+    if request.method == 'POST':
+        if request.POST.get('Received_From') == '':
+            Received_From = None
+        else:
+            Received_From=request.POST.get(' request.POST.getlist("Received_From")[0]')
+        if request.POST.get("Number_Of_Received") =='':
+            Number_Of_Received = None
+        else:
+            Number_Of_Received=request.POST.get('request.POST.getlist("Number_Of_Received")[0]')
+    
+        if request.POST.get('Issue_To') == '':
+            Issue_To = None
+        else:
+            
+            Issue_To=request.POST.get('request.POST.getlist("Issue_To")[0]')
 
-	if request.method == 'POST':
-		form = MaterialForm(request.POST, instance=material)
-		if form.is_valid():
-			form.save()
-			return redirect('/display')
-	mat =  Materialserializers(material).data
-	context = {'form':form,'id':material.id,'mat':mat}
-	print("------",material)    
-	return render(request, 'home.html', context)
+        if request.POST.get("Number_Of_Issued") =='':
+            Number_Of_Issued = None
+        else:
+            no_of_issued = request.POST.get("request.POST.getlist('no_of_issued')[0]")
+            Number_Of_Issued= int(no_of_issued)
+        
+
+        form = MaterialForm(request.POST, instance=material)        
+        
+        mat_id = MaterialsInventory.objects.filter( Material_Name = selected_material_id )[0].id
+        print(mat_id)
+        Material.objects.filter(Document_Number = request.POST["Document_Number"]).update(
+            Transaction_Type =request.POST["Transaction_Type"],
+            Received_From = Received_From,
+            Number_Of_Received = Number_Of_Received ,
+            Issue_To = Issue_To, 
+            Number_Of_Issued = Number_Of_Issued,
+            Balance =request.POST["Balance"],
+            Material_Name_id = mat_id,
+            Date = request.POST["Date"],
+            Verification_Date = request.POST["Verification_Date"],
+            Verified_By = request.POST["Verified_By"]
+            ) 
+        
+        # if form.is_valid():
+        
+        return redirect('/display')
+    else:
+
+        mat =  Materialserializers(material).data
+        context = {'form':form,'id':material.id,'mat':mat,'selected_material_id':selected_material_id}
+        print("------",material)    
+        return render(request, 'home.html', context)
 
 
 def add_materail_view(request,id):
@@ -117,7 +171,7 @@ def add_materail_view(request,id):
 
 
 
-
+#  Received_From=request.POST.get(' request.POST.getlist("Received_From")[0]')
 
 # doc_unique=Material.objects.values_list('Document_Number', flat=True)
 #     doc_unique=list(doc_unique)

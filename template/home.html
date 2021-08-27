@@ -200,7 +200,7 @@
 		var materialName = document.getElementById("Material_Names").value;
 		console.log(materialName)
 		
-		document.getElementById('selected_mat_name').value = matr ;
+		document.getElementById('selected_mat_name').value = materialName;
 		
 		var Transactiontype = document.getElementById("Transaction_Type").value;
 		var Issued = document.getElementById("Issue_To").value;
@@ -249,7 +249,17 @@
 	        {% csrf_token %}
 			<div class="form-group">
 				<label class="=control-label col-sm-5" ><b>Material Name:</b></label>
-				<select    id='Material_Names'    >
+				<div class="col-sm-10">
+					{% if id%}	
+					<input type="text" class="form-design" id="Material_Name" name="Material_Name" value="{{ selected_material_id }}" required>
+					{% else %}
+					<input type="text" class="form-control" id="Material_Names" name="Material_Names" required>
+					{% for select in mat_name %}  
+					<option value="{{ select.Material_Name }}">{{ select.Material_Name}}</option>  
+					{% endfor %}
+					{% endif %}
+				</div>
+				<!-- <select    id='Material_Names'    >
 					{% if id %}
 					<option  id="Material_Names" name="selected_mat_name" id ='selected_mat_name' value="{{mat.Material_Name}}" selected><b>{{mat.Material_Name}}</b></option>
 					{% else %}
@@ -258,7 +268,7 @@
 					<option value="{{ select.Material_Name}}">{{ select.Material_Name}}</option>  
 					{% endfor %}
 					{% endif %}
-				</select>
+				</select> -->
 			</div> 
 			
 			        <div class="form-group">
@@ -278,9 +288,9 @@
 							{% if id %}
 							<label class="=control-label col-sm-5" ><b>Issued To:</b></label>  
 							<div class="col-sm-10">
-								<input type="text" class="form-design" value="{{mat.Issue_To}}">
+								<input type="text" class="form-design"id="Issue_To" name="Issue_To" value="{{mat.Issue_To}}">
 								<label class="=control-label col-sm-5" ><b>Number Of Issued :</b></label> 
-								<input type="text" class="form-design" value="{{mat.Number_Of_Issued}}">
+								<input type="text" class="form-design" id="Number_Of_Issued" name="Number_Of_Issued" value="{{mat.Number_Of_Issued}}">
 							</div>
 							{%  endif %}
 						</div>
@@ -291,9 +301,9 @@
 							{% if id %}
 							<label class="=control-label col-sm-5" ><b>Received From:</b></label>  
 							<div class="col-sm-10">
-								<input type="text" class="form-design" value="{{mat.Received_From}}">
+								<input type="text" class="form-design" id="Received_From" name="Received_From" value="{{mat.Received_From}}">
 								<label class="=control-label col-sm-5" ><b>Number_Of_Received :</b></label> 
-								<input type="text" class="form-design" value="{{mat.Number_Of_Received}}">
+								<input type="text" class="form-design" id="Number_Of_Received" name="Number_Of_Received" value="{{mat.Number_Of_Received}}">
 							</div>
 							{%  endif %}
 						</div>
