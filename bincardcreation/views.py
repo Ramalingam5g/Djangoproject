@@ -31,11 +31,17 @@ def Create_Method(request):
    
    
     if request.method == 'POST':
-        # import pdb;pdb.set_trace()
+        import pdb;pdb.set_trace()
         form = MaterialForm(request.POST)
+        # material_id= Material.objects.filter(id=id)[0].Material_Name_id
+        # print(material_id)
+        
         # selected_material_name = MaterialsInventory.objects.filter(Material_Name = request.POST.get("Material_Names"))
+        
         get_selected_material_id = MaterialsInventory.objects.filter(Material_Name = request.POST.get("Material_Names")).values_list('id', flat=True).first()
         print(get_selected_material_id)
+        selected_material_id = MaterialsInventory.objects.filter(id = get_selected_material_id )[0].Material_Name    
+        print(selected_material_id)
      
         # get_id = MaterialsInventory.objects.values_list('id', 'Material_Name')
         # print(get_id)
@@ -93,7 +99,7 @@ def Create_Method(request):
 
 def update(request, id):
     
-    # import pdb;pdb.set_trace()
+    import pdb;pdb.set_trace()
     material = Material.objects.get(id=id)
     form = MaterialForm(instance=material)
     material_id= Material.objects.filter(id=id)[0].Material_Name_id
