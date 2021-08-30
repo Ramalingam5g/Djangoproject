@@ -1,0 +1,17 @@
+<label class="=control-label col-sm-5" ><b>Material Name:</b></label> {{ mat.id }}
+				<select id="mname">
+					 
+					<option  id="Material_Name" name="Material_Name" selected><b>--Select Material Name--</b></option>
+					{% for select in mat_name %}
+					
+					<option>{{ select.Material_Name}}</option>
+					
+					{% endfor %}
+				</select>  
+                <script>
+					function myFunction() {
+					  var x = document.getElementById("Material_Name");
+					  var result = e.options[e.selectedIndex].text;
+					  alert(hello)
+					}
+				</script>

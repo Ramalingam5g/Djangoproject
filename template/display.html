@@ -78,16 +78,12 @@ tr:nth-child(even) {
         <td> {{form_material.Document_Number}}</td>
         <td> {{ form_material.Balance}}</td>
         <td> {{ form_material.Verification_Date }} </td>
-        <td><button><a href="/update/{{form_material.id}}"><span class="button" >Update</span></a></button></td>  
+        <td><button><a href="/Update/{{form_material.id}}"><span class="button" >Update</span></a></button></td>  
        
     </tr>  
 {% endfor %}  
     </tbody>  
 </table>  
-
-
-<!-- <center style="margin: 25px;"><button> <a href="/Create_Method" type="button" class="button">Add New Record</a></button></center> -->
-<!-- <center><a href="/post_method"  type="button" class="btn btn-primary">Add New Record</a></center>   -->
 </body>  
 </html>  
 
