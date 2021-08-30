@@ -108,26 +108,56 @@ def update(request, id):
     
     print(selected_material_id)
     if request.method == 'POST':
-        if request.POST.get('Received_From') == '':
-            Received_From = None
-        else:
-            Received_From=request.POST.get(' request.POST.getlist("Received_From")[0]')
-        if request.POST.get("Number_Of_Received") =='':
-            Number_Of_Received = None
-        else:
-            Number_Of_Received=request.POST.get('request.POST.getlist("Number_Of_Received")[0]')
-    
-        if request.POST.get('Issue_To') == '':
+        
+        if request.POST['Transaction_Type'] == "Received From":
+            Received_From =  request.POST.getlist("Received_From")[0]
+            Number_Of_Received = request.POST.getlist('Number_Of_Received')[0]
             Issue_To = None
-        else:
-            
-            Issue_To=request.POST.get('request.POST.getlist("Issue_To")[0]')
-
-        if request.POST.get("Number_Of_Issued") =='':
             Number_Of_Issued = None
+
         else:
-            no_of_issued = request.POST.get("request.POST.getlist('no_of_issued')[0]")
-            Number_Of_Issued= int(no_of_issued)
+            Issue_To = request.POST.getlist("Issue_To")[0]
+            Number_Of_Issued = request.POST.getlist('Number_Of_Issued')[0]
+            Received_From = None
+            Number_Of_Received = None
+
+        # if request.POST.get('Received_From') == '':
+        #     Received_From = None
+        # else:
+        #     Received_From =  request.POST.getlist("Received_From")[0]
+        # if request.POST.get("Number_Of_Received") =='':
+        #     Number_Of_Received = None
+        # else:
+        #     Number_Of_Received = request.POST.getlist('Number_Of_Received')[0]
+        # if request.POST.get('Issue_To') == '':
+        #     Issue_To = None
+        # else:
+        #     Issue_To = request.POST.getlist("Issue_To")[0]
+        # if request.POST.get("Number_Of_Issued") =='':
+        #     Number_Of_Issued = None
+        # else: 
+        #     Number_Of_Issued = request.POST.getlist('Number_Of_Issued')[0]
+        
+        # if request.POST.get('Received_From') == '':
+        #     Received_From = None
+        # else:
+        #     Received_From=request.POST.get(' request.POST.getlist("Received_From")[0]')
+        # if request.POST.get("Number_Of_Received") =='':
+        #     Number_Of_Received = None
+        # else:
+        #     Number_Of_Received=request.POST.get('request.POST.getlist("Number_Of_Received")[0]')
+    
+        # if request.POST.get('Issue_To') == '':
+        #     Issue_To = None
+        # else:
+            
+        #     Issue_To=request.POST.get('request.POST.getlist("Issue_To")[0]')
+
+        # if request.POST.get("Number_Of_Issued") =='':
+        #     Number_Of_Issued = None
+        # else:
+        #     no_of_issued = request.POST.get("request.POST.getlist('no_of_issued')[0]")
+        #     Number_Of_Issued= int(no_of_issued)
         
 
         form = MaterialForm(request.POST, instance=material)        

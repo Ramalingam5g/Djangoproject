@@ -31,6 +31,21 @@
     border-radius: .25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+.form-designerS{
+	display: block;
+	
+    width: 58%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+	font-weight: 500;
+    line-height: 1.5;
+	color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
 .contact{
 	padding: 4%;
 	height: 400px;
@@ -197,38 +212,30 @@
 
 	
 		
-		var materialName = document.getElementById("Material_Names").value;
-		console.log(materialName)
+		// var materialName = document.getElementById("Material_Names").value;
+		// console.log(materialName)
 		
-		document.getElementById('selected_mat_name').value = materialName;
+		// document.getElementById('selected_mat_name').value = materialName;
 		
-		var Transactiontype = document.getElementById("Transaction_Type").value;
-		var Issued = document.getElementById("Issue_To").value;
-		var no_of_issued =document.getElementById("Number_Of_Issued").value;
-		var Received =document.getElementById("Received_From").value;
-		var no_of_received =document.getElementById("Number_Of_Received").value;
-		var Balance = document.getElementById("Balances").value;
-		var Date = document.getElementById("Date").value;
-		var Document_Number = document.getElementById("Document_Number").value;	
-		var Verification_Date = document.getElementById("Verification_Date").value;
-		var Verified_By = document.getElementById("Verified_By").value;
+		// var Transactiontype = document.getElementById("Transaction_Type").value;
+		// var Issued = document.getElementById("Issue_To").value;
+		// var no_of_issued =document.getElementById("Number_Of_Issued").value;
+		// var Received =document.getElementById("Received_From").value;
+		// var no_of_received =document.getElementById("Number_Of_Received").value;
+		// var Balance = document.getElementById("Balances").value;
+		// var Date = document.getElementById("Date").value;
+		// var Document_Number = document.getElementById("Document_Number").value;	
+		// var Verification_Date = document.getElementById("Verification_Date").value;
+		// var Verified_By = document.getElementById("Verified_By").value;
 
 
-		$("#RegForm").submit(function(event) {
-        var $form = $(this),
-        $inputs = $form.find("input, select, button, textarea"),
-        serializedData = $form.serialize();
+		// $("#RegForm").submit(function(event) {
+        // var $form = $(this),
+        // $inputs = $form.find("input, select, button, textarea"),
+        // serializedData = $form.serialize();
+		alert("Are You sure To submit The")
 
-        $.ajax({
-            url: "/Create_Method/",
-            type: "post",
-            data: serializeData,
-            success: function(response) {
-                alert(response)
-            }
-        })
-        event.preventDefault();
-    });
+       
 
 
       
@@ -261,7 +268,7 @@
 				</div> --> 
 				<select    id='Material_Names' name='Material_Names' >
 					{% if id %}
-					<input type="text" class="form-design" id="Material_Name" name="Material_Name" value="{{ selected_material_id }}" required>
+					<input type="text"  class="form-designerS" id="Material_Name" name="Material_Name" value="{{ selected_material_id }}" required>
 					{% else %}
 					<option disabled='true' name='Material_Names' id='Material_Names'  selected><b>--Select Material Name--</b></option>
 					{% for select in mat_name %}  
