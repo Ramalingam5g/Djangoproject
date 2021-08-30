@@ -24,7 +24,7 @@ urlpatterns = [
     path('Create_Method',views.Create_Method),
     path('',views.display),
     path('display/',views.display,name="display"),
-    path('Update/<str:id>', views.Update),   
+    path('Update/<str:id>', views.Update_Method),   
 ]
 
 
