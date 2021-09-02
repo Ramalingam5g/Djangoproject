@@ -1,17 +1,20 @@
+""" this is a minshare application"""
 from django.shortcuts import render, redirect
 from bincardcreation.models import Material, MaterialsInventory
 from bincardcreation.forms import MaterialForm
 from .serializers import Materialserializers
 
 
-''' Function To Display all the Material Fields '''
+
 def display(request):
+    """ this function used for display the material list """
     materials = Material.objects.all()
     context = {"materials": materials}
     return render(request, "display.html", context)
 
-''' Function To Create New List '''
-def Create_Method(request):
+
+def create_method(request):
+    """ this function used for create a new data """
     doc_unique = Material.objects.values_list("Document_Number", flat=True)
     doc_unique = list(doc_unique)
     material_name = MaterialsInventory.objects.all()
@@ -64,20 +67,19 @@ def Create_Method(request):
         saverecord.save()
         return redirect("/display")
 
-    else:
+    return render(
+        request,
+        "home.html",
+        {
+            "mat_name": material_name,
+            "MaterialsInventory": mydict,
+            "doc_id": doc_unique,
+        },
+    )
 
-        return render(
-            request,
-            "home.html",
-            {
-                "mat_name": material_name,
-                "MaterialsInventory": mydict,
-                "doc_id": doc_unique,
-            },
-        )
 
-''' Function To update The List '''
-def Update_Method(request, id):
+def update_method(request, id):# pylint: disable=C0103
+    """ this function used for update the data """
     material = Material.objects.get(id=id)
     form = MaterialForm(instance=material)
     material_id = Material.objects.filter(id=id)[0].Material_Name_id
@@ -86,16 +88,16 @@ def Update_Method(request, id):
     ].Material_Name
     if request.method == "POST":
         if request.POST["Transaction_Type"] == "Received From":
-            Received_From = request.POST.getlist("Received_From")[0]
-            Number_Of_Received = request.POST.getlist("Number_Of_Received")[0]
-            Issue_To = None
-            Number_Of_Issued = None
+            received_from = request.POST.getlist("Received_From")[0]
+            number_of_received = request.POST.getlist("Number_Of_Received")[0]
+            issue_to = None
+            number_of_issued = None
 
         else:
-            Issue_To = request.POST.getlist("Issue_To")[0]
-            Number_Of_Issued = request.POST.getlist("Number_Of_Issued")[0]
-            Received_From = None
-            Number_Of_Received = None
+            issue_to = request.POST.getlist("Issue_To")[0]
+            number_of_issued = request.POST.getlist("Number_Of_Issued")[0]
+            received_from = None
+            number_of_received = None
 
         form = MaterialForm(request.POST, instance=material)
 
@@ -105,10 +107,10 @@ def Update_Method(request, id):
 
         Material.objects.filter(Document_Number = request.POST["Document_Number"]).update(
             Transaction_Type = request.POST["Transaction_Type"],
-            Received_From = Received_From,
-            Number_Of_Received = Number_Of_Received,
-            Issue_To = Issue_To,
-            Number_Of_Issued = Number_Of_Issued,
+            Received_From = received_from,
+            Number_Of_Received = number_of_received,
+            Issue_To = issue_to,
+            Number_Of_Issued = number_of_issued,
             Balance = request.POST["Balance"],
             Material_Name_id = material_id,
             Date = request.POST["Date"],
@@ -117,12 +119,12 @@ def Update_Method(request, id):
         )
 
         return redirect("/display")
-    else:
-        mat = Materialserializers(material).data
-        context = {
-            "form": form,
-            "id": material.id,
-            "mat": mat,
-            "selected_material_id": selected_material_id
-        }
-        return render(request, "home.html", context)
+
+    mat = Materialserializers(material).data
+    context = {
+        "form": form,
+        "id": material_id,
+        "mat": mat,
+        "selected_material_id": selected_material_id
+    }
+    return render(request, "home.html", context)

@@ -21,10 +21,10 @@ from bincardcreation import views
 
 
 urlpatterns = [
-    path('Create_Method',views.Create_Method),
+    path('Create_Method',views.create_method),
     path('',views.display),
     path('display/',views.display,name="display"),
-    path('Update/<str:id>', views.Update_Method),   
+    path('Update/<str:id>', views.update_method),   
 ]
 
 
