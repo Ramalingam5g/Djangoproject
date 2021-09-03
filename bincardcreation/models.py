@@ -12,8 +12,8 @@ class MaterialsInventory(models.Model):
     Re_order_Level=models.IntegerField(null=True, blank=True)
     Quantity=models.IntegerField(null=True,blank=True)
 
-    class Meta:
-        db_table="bincardcreation_materialsinventory"
+    # class Meta:
+        # db_table="bincardcreation_materialsinventory"
  
 
 class Material(models.Model):

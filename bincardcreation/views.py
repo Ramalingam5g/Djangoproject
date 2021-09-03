@@ -8,6 +8,7 @@ from .serializers import Materialserializers
 
 def display(request):
     """ this function used for display the material list """
+    # pylint: disable=no-member
     materials = Material.objects.all()
     context = {"materials": materials}
     return render(request, "display.html", context)
@@ -15,8 +16,10 @@ def display(request):
 
 def create_method(request):
     """ this function used for create a new data """
+    # pylint: disable=no-member
     doc_unique = Material.objects.values_list("Document_Number", flat=True)
     doc_unique = list(doc_unique)
+    # pylint: disable=no-member
     material_name = MaterialsInventory.objects.all()
     mydict = {}
 
@@ -25,6 +28,7 @@ def create_method(request):
 
     if request.method == "POST":
         get_selected_material_id = (
+            # pylint: disable=no-member
             MaterialsInventory.objects.filter(
                 Material_Name=request.POST.get("Material_Names")
             )
@@ -77,12 +81,14 @@ def create_method(request):
         },
     )
 
-
-def update_method(request, id):# pylint: disable=C0103
+# pylint: disable=C0103
+def update_method(request, id):# pylint: disable=redefined-builtin
     """ this function used for update the data """
+    # pylint: disable=no-member
     material = Material.objects.get(id=id)
     form = MaterialForm(instance=material)
     material_id = Material.objects.filter(id=id)[0].Material_Name_id
+    # pylint: disable=no-member
     selected_material_id = MaterialsInventory.objects.filter(id=material_id)[
         0
     ].Material_Name
@@ -100,11 +106,11 @@ def update_method(request, id):# pylint: disable=C0103
             number_of_received = None
 
         form = MaterialForm(request.POST, instance=material)
-
+        # pylint: disable=no-member
         material_id = MaterialsInventory.objects.filter(
             Material_Name=selected_material_id
         )[0].id
-
+        # pylint: disable=no-member
         Material.objects.filter(Document_Number = request.POST["Document_Number"]).update(
             Transaction_Type = request.POST["Transaction_Type"],
             Received_From = received_from,
