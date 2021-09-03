@@ -104,6 +104,7 @@ def update_method(request, id):# pylint: disable=redefined-builtin
             number_of_issued = request.POST.getlist("Number_Of_Issued")[0]
             received_from = None
             number_of_received = None
+            
 
         form = MaterialForm(request.POST, instance=material)
         # pylint: disable=no-member
