@@ -6,5 +6,3 @@ class Materialserializers(serializers.ModelSerializer):
     class Meta:
         model = Material
         fields = '__all__'
-        
-        
