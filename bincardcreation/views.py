@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from bincardcreation.models import Material, MaterialsInventory
 from bincardcreation.forms import MaterialForm
 from .serializers import Materialserializers
+from datetime import datetime
 
 
 
@@ -17,6 +18,7 @@ def display(request):
 def create_method(request):
     """ this function used for create a new data """
     # pylint: disable=no-member
+    import pdb; pdb.set_trace()
     doc_unique = Material.objects.values_list("Document_Number", flat=True)
     doc_unique = list(doc_unique)
     material_name = MaterialsInventory.objects.all()
@@ -57,14 +59,14 @@ def create_method(request):
             saverecord.Number_Of_Issued = int(no_of_issued)
         saverecord.Balance = request.POST.get("Balances")
         print("Balances", saverecord.Balance)
+        import pdb; pdb.set_trace()
 
         saverecord.Material_Name_id = get_selected_material_id
-        print("Material_Names", saverecord.Material_Name_id)
-        saverecord.Date = request.POST.get("Date")
-        print("Date", saverecord.Date)
+        Date = request.POST.get("Date")
+        saverecord.Date = datetime.strptime(Date, "%m/%d/%Y").strftime('%Y-%m-%d')
         saverecord.Document_Number = request.POST.get("Document_Number")
-        print("Document_Number", saverecord.Document_Number)
-        saverecord.Verification_Date = request.POST.get("Verification_Date")
+        Verification_Date = request.POST.get("Verification_Date")
+        saverecord.Verification_Date = datetime.strptime(Verification_Date, "%m/%d/%Y").strftime('%Y-%m-%d')
         saverecord.Verified_By = request.POST.get("Verified_By")
         saverecord.save()
         return redirect("/display")
@@ -88,6 +90,7 @@ def update_method(request, id):
     selected_material_id = MaterialsInventory.objects.filter(id=material_id)[
         0
     ].Material_Name
+    import pdb; pdb.set_trace()
     if request.method == "POST":
         if request.POST["Transaction_Type"] == "Received From":
             received_from = request.POST.getlist("Received_From")[0]
@@ -101,8 +104,11 @@ def update_method(request, id):
             received_from = None
             number_of_received = None
 
-
-
+        Date_field = request.POST["Date"] 
+        convert_date_field = datetime.strptime(Date_field, "%m/%d/%Y").strftime('%Y-%m-%d')
+        Verify_Date = request.POST["Verification_Date"]
+        covert_verify_date = datetime.strptime(Verify_Date, "%m/%d/%Y").strftime('%Y-%m-%d')
+        
         form = MaterialForm(request.POST, instance=material)
         material_id = MaterialsInventory.objects.filter(
             Material_Name=selected_material_id
@@ -115,8 +121,8 @@ def update_method(request, id):
             Number_Of_Issued = number_of_issued,
             Balance = request.POST["Balance"],
             Material_Name_id = material_id,
-            Date = request.POST["Date"],
-            Verification_Date = request.POST["Verification_Date"],
+            Date = convert_date_field,
+            Verification_Date = covert_verify_date,
             Verified_By = request.POST["Verified_By"],
         )
 

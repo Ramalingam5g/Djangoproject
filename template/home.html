@@ -95,22 +95,12 @@
 <script type="text/javascript">
 
 $(function() {
-var date = new Date();
-var currentMonth = date.getMonth();
-var currentDate = date.getDate();
-var currentYear = date.getFullYear();
+  $( "#Date" ).datepicker({  maxDate: new Date() });
+ });
+ $(function() {
+  $( "#Verification_Date" ).datepicker({  maxDate: new Date() });
+ });
 
-$('#Date').datepicker({
-maxDate: new Date(currentYear, currentMonth, currentDate)
-});
-$('#Verification_Date').datepicker({
-maxDate: new Date(currentYear, currentMonth, currentDate)
-});
-var d = new Date("currentYear, currentMonth, currentDate");
-var str = $.datepicker.formatDate('yy-mm-dd', d);
-alert(str);
-});
-					
 	$(function () {
 		
 		$("#getid").change(function () {
@@ -368,7 +358,7 @@ alert(str);
 					{% if id %}
 					<input type="text" class="form-design" id="Date" name="Date" value="{{ mat.Date }}" required >
 					{% else %}
-					<input type="text" class="form-control" id="Date" name="Date" value="{{ form.Date }}" required>
+					<input type="text" class="form-control" id="Date" name="Date" value="{{ form.Date }}" >
 					{% endif %}
 				  </div>
 				</div>
@@ -388,7 +378,7 @@ alert(str);
 				    {%if id %}
 					<input type="text" class="form-design" id="Verification_Date" name="Verification_Date" value="{{ mat.Verification_Date }}" required>
 					{% else %} 
-					<input type="text" class="form-control" id="Verification_Date"  name="Verification_Date" value="{{ form.Verification_Date }}" required>
+					<input type="text" class="form-control" id="Verification_Date"  name="Verification_Date" value="{{ form.Verification_Date }}" >
 				    {% endif %} 
 				    </div>
 				</div>
